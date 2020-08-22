@@ -1,8 +1,9 @@
 const express = require("express");
-const router = express.Router();
+const authorRouter = express.Router();
+const authController = require("../../controller/authorController");
 
 //@route GET api/author
 //@desc temprary route for author and their collections of items
-router.get("/", (req, res) => res.send("Author Route"));
+authorRouter.get("/author", authController.authorFunction);
 
-module.exports = router;
+module.exports = authorRouter;

@@ -1,8 +1,9 @@
 const express = require('express');
-const router = express.Router();
+const userRouter = express.Router();
+const userController = require('../../controller/userController')
 
 //@route GET api/users
 //@desc temprary route for user
-router.get('/', (req, res)=> res.send('User Route'));
+userRouter.get('/user', userController.userFunction);
 
-module.exports = router;
+module.exports = userRouter;

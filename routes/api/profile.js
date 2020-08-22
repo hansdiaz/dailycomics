@@ -1,8 +1,9 @@
 const express = require("express");
-const router = express.Router();
+const profileRouter = express.Router();
+const profileController = require("../../controller/profileController");
 
 //@route GET api/profile
 //@desc temprary route for user's favourite collections
-router.get("/", (req, res) => res.send("Profile Route"));
+profileRouter.get("/profile", profileController.profileFunction);
 
-module.exports = router;
+module.exports = profileRouter;

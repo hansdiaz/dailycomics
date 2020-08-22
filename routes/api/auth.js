@@ -1,8 +1,9 @@
 const express = require("express");
-const router = express.Router();
+const authRouter = express.Router();
+const authController = require("../../controller/authController");
 
 //@route GET api/auth
 //@desc route for generating JWT
-router.get("/", (req, res) => res.send("Auth Route"));
+authRouter.get("/auth", authController.authFunction);
 
-module.exports = router;
+module.exports = authRouter;

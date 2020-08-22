@@ -1,8 +1,9 @@
 const express = require("express");
-const router = express.Router();
+const comicRouter = express.Router();
+const comicController = require("../../controller/comicController");
 
 //@route GET api/comic
-//@desc temprary route for author and their collections of items
-router.get("/", (req, res) => res.send("Comic Route"));
+//@desc comic book info single
+comicRouter.get("/comic", comicController.comicFunction);
 
-module.exports = router;
+module.exports = comicRouter;
