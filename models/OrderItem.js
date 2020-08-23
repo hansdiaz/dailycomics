@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const OrderSchema = new mongoose.Schema({
+const OrderItemSchema = new mongoose.Schema({
   comicissue_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "comicissue",
@@ -10,6 +10,10 @@ const OrderSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  order_item_status: {
+    type: String,
+    required: true,
+  },
 });
 
-module.exports = Order = mongoose.model("order", OrderSchema);
+module.exports = Order = mongoose.model("orderitem", OrderItemSchema);
