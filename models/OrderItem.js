@@ -14,6 +14,17 @@ const OrderItemSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  delivery: {
+    next_dod: {
+      //designated for onetime and subscription service Date of Delivery
+      type: Date,
+      required: true,
+    },
+    loop_dod: {
+      //designated for subscription services would point the next up date
+      type: Date,
+    },
+  },
 });
 
 module.exports = Order = mongoose.model("orderitem", OrderItemSchema);

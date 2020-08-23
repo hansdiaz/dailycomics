@@ -1,10 +1,15 @@
 const mongoose = require("mongoose");
 
 const ComicIssueSchema = new mongoose.Schema({
-  seriesid: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "comicseries",
-    required: true,
+  comicitem: {
+    seriesid: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "comicseries",
+    },
+    itemtype: {
+      type: String,
+      required: true,
+    },
   },
   issuenumber: {
     type: Number,
