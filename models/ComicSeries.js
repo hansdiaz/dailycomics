@@ -12,6 +12,10 @@ const ComicSeriesSchema = new mongoose.Schema({
       ref: "author",
     },
   ],
+  category: {
+    type: Array,
+    required: true,
+  },
   universe: {
     type: String,
     required: true,

@@ -10,8 +10,14 @@ const AuthorSchema = new mongoose.Schema({
     required: true,
   },
   imageref: {
-    type: String,
-    required: true,
+    profileref: {
+      type: String,
+      required: true,
+    },
+    coverref: {
+      type: String,
+      required: true,
+    },
   },
   sales: {
     type: Number,

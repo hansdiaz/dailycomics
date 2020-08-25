@@ -16,25 +16,21 @@ const UserSchema = new mongoose.Schema({
   deliveryinfo: {
     name: {
       type: String,
-      required: true,
     },
     address: {
       type: String,
-      required: true,
     },
     postalcode: {
       type: Number,
     },
     city: {
       type: String,
-      required: true,
     },
     country: {
       type: String,
-      required: true,
     },
     phonenumber: {
-      type: String,
+      type: Number,
     },
   },
 
