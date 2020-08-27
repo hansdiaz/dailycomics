@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 export default class LoginComponent extends Component {
+  // eslint-disable-next-line
   constructor(props) {
     super(props);
   }
@@ -9,7 +11,7 @@ export default class LoginComponent extends Component {
     //const element = (<div>Text from Element</div>)
     return (
       <div className="container">
-        <div className="col-lg-6 mx-auto">
+        <div className="col-lg-5 mx-auto">
           <form className="">
             <div id="login1" data-target-group="idForm1">
               <header className="px-4 px-md-0 py-6 align-items-center">
@@ -64,15 +66,15 @@ export default class LoginComponent extends Component {
                 </div>
 
                 <div className="d-flex justify-content-between mb-5 align-items-center">
-                  <a
+                  <Link
+                    to="/forgotpassword"
                     className="js-animation-link text-dark font-size-2 t-d-u link-muted font-weight-medium"
-                    href="javascript:;"
                     data-target="#forgotPassword1"
                     data-link-group="idForm1"
                     data-animation-in="fadeIn"
                   >
                     Forgot Password?
-                  </a>
+                  </Link>
                 </div>
                 <div className="mb-4d75">
                   <button
@@ -83,15 +85,15 @@ export default class LoginComponent extends Component {
                   </button>
                 </div>
                 <div className="mb-2">
-                  <a
-                    href="javascript:;"
+                  <Link
+                    to="/register"
                     className="js-animation-link btn btn-block py-3 rounded-0 btn-outline-dark font-weight-medium"
                     data-target="#signup1"
                     data-link-group="idForm1"
                     data-animation-in="fadeIn"
                   >
                     Create Account
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

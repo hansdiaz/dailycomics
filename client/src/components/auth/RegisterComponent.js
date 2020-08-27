@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 export default class RegisterComponent extends Component {
+  // eslint-disable-next-line
   constructor(props) {
     super(props);
   }
@@ -10,7 +12,7 @@ export default class RegisterComponent extends Component {
     return (
       <div className="container">
         <form className="">
-          <div className="col-lg-6 mx-auto">
+          <div className="col-lg-5 mx-auto">
             <header className="px-4 px-md-0 py-6 align-items-center">
               <h2>
                 <center>Create an Account</center>
@@ -95,15 +97,15 @@ export default class RegisterComponent extends Component {
                 <span className="small text-muted">
                   Already have an account?
                 </span>
-                <a
+                <Link
+                  to="/login"
                   className="js-animation-link small"
-                  href="javascript:;"
                   data-target="#login1"
                   data-link-group="idForm1"
                   data-animation-in="fadeIn"
                 >
                   Login
-                </a>
+                </Link>
               </div>
             </div>
           </div>

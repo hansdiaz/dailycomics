@@ -8,6 +8,8 @@ import HomeComponent from "../src/components/combined/HomeComponent";
 import LoginComponent from "./components/auth/LoginComponent";
 import RegisterComponent from "./components/auth/RegisterComponent";
 import ForgotPassword from "./components/auth/ForgotPassword";
+import Cart from "./components/bodyitems/Cart";
+import Products from "./components/bodyitems/Products";
 
 import "./App.css";
 import "./assets/vendor/font-awesome/css/fontawesome-all.min.css";
@@ -29,6 +31,8 @@ class App extends Component {
               <Route exact path="/login" component={LoginComponent} />
               <Route exact path="/register" component={RegisterComponent} />
               <Route exact path="/forgotpassword" component={ForgotPassword} />
+              <Route exact path="/cart" component={Cart} />
+              <Route exact path="/products" component={Products}/>
             </Switch>
             <Footer />
           </div>

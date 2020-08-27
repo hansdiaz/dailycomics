@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 export default class NavBar extends Component {
+  // eslint-disable-next-line
   constructor(props) {
     super(props);
   }
@@ -35,14 +36,14 @@ export default class NavBar extends Component {
             <div className="container pt-3 pb-2 pt-lg-5 pb-lg-5">
               <div className="d-flex align-items-center position-relative flex-wrap">
                 <div className="site-branding pr-md-11 mx-auto mx-md-0">
-                  <a href="index.html" className="d-block mb-1">
+                  <Link to="/" className="d-block mb-1">
                     <img
                       src={require("../../assets/img/logo.png")}
                       className="img-fluid"
                       alt="image-description"
                       width="330px"
                     />
-                  </a>
+                  </Link>
                 </div>
                 <div className="site-search ml-xl-0 ml-md-auto w-r-100 flex-grow-1 mr-md-5 py-2 py-md-0">
                   <form className="form-inline my-2 my-xl-0">
@@ -97,9 +98,8 @@ export default class NavBar extends Component {
                     </Link>
                   </li>
                   <li className="nav-item">
-                    <a
+                    <Link to="/cart"
                       id="sidebarNavToggler1"
-                      href="javascript:;"
                       role="button"
                       className="nav-link pr-0 text-dark position-relative"
                       aria-controls="sidebarContent1"
@@ -125,7 +125,7 @@ export default class NavBar extends Component {
                       <span className="d-none d-xl-inline h6 mb-0 ml-1">
                         $40.93
                       </span>
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </div>
@@ -137,28 +137,18 @@ export default class NavBar extends Component {
                 <div className="site-navigation mr-auto d-none d-xl-block">
                   <ul className="nav">
                     <li className="nav-item">
-                      <a
-                        href="#"
+                      <Link to="/"
                         className="nav-link link-black-100 mx-2 px-0 py-3 font-weight-medium active border-bottom border-primary border-width-2"
                       >
                         Home
-                      </a>
+                      </Link>
                     </li>
                     <li className="nav-item">
-                      <a
-                        href="#"
+                      <Link to="/products"
                         className="nav-link link-black-100 mx-2 px-0 py-3 font-weight-medium active border-bottom border-primary border-width-2"
                       >
                         Browse Comics
-                      </a>
-                    </li>
-                    <li className="nav-item">
-                      <a
-                        href="#"
-                        className="nav-link link-black-100 mx-2 px-0 py-3 font-weight-medium active border-bottom border-primary border-width-2"
-                      >
-                        Comic Series
-                      </a>
+                      </Link>
                     </li>
                     <li className="nav-item">
                       <a
