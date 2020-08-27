@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 export default class NavBar extends Component {
   constructor(props) {
@@ -70,29 +71,30 @@ export default class NavBar extends Component {
                     </a>
                   </li>
                   <li className="nav-item">
-                    <a
-                      id="sidebarNavToggler"
-                      href="javascript:;"
-                      role="button"
-                      className="nav-link text-dark"
-                      aria-controls="sidebarContent"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                      data-unfold-event="click"
-                      data-unfold-hide-on-scroll="false"
-                      data-unfold-target="#sidebarContent"
-                      data-unfold-type="css-animation"
-                      data-unfold-overlay='{
+                    <Link to="/login">
+                      <a
+                        id="sidebarNavToggler"
+                        role="button"
+                        className="nav-link text-dark"
+                        aria-controls="sidebarContent"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                        data-unfold-event="click"
+                        data-unfold-hide-on-scroll="false"
+                        data-unfold-target="#sidebarContent"
+                        data-unfold-type="css-animation"
+                        data-unfold-overlay='{
                                           "className": "u-sidebar-bg-overlay",
                                           "background": "rgba(0, 0, 0, .7)",
                                           "animationSpeed": 500
                                       }'
-                      data-unfold-animation-in="fadeInRight"
-                      data-unfold-animation-out="fadeOutRight"
-                      data-unfold-duration="500"
-                    >
-                      <i className="glph-icon flaticon-user font-size-4"></i>
-                    </a>
+                        data-unfold-animation-in="fadeInRight"
+                        data-unfold-animation-out="fadeOutRight"
+                        data-unfold-duration="500"
+                      >
+                        <i className="glph-icon flaticon-user font-size-4"></i>
+                      </a>
+                    </Link>
                   </li>
                   <li className="nav-item">
                     <a
@@ -168,7 +170,7 @@ export default class NavBar extends Component {
                     </li>
                   </ul>
                 </div>
-                <div className="d-none d-md-block ml-md-auto secondary-navigation">
+                <div className="d-none d-md-block ml-md-auto secondary-navigation ">
                   <ul className="nav">
                     <li className="nav-item">
                       <a

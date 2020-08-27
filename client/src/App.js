@@ -1,11 +1,13 @@
 import React, { Fragment, Component } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+
 import NavBar from "../src/components/layout/NavBar";
 import Footer from "../src/components/layout/Footer";
-import HomeFront from "../src/components/bodyitems/HomeFront";
-import ServiceBanner from "../src/components/bodyitems/ServiceBanner";
-import ProductTypes from "../src/components/bodyitems/ProductTypes";
-import FeaturedComics from "../src/components/bodyitems/FeaturedComics";
-import BestAuthor from "../src/components/bodyitems/BestAuthor";
+
+import HomeComponent from "../src/components/combined/HomeComponent";
+import LoginComponent from "./components/auth/LoginComponent";
+import RegisterComponent from "./components/auth/RegisterComponent";
+import ForgotPassword from "./components/auth/ForgotPassword";
 
 import "./App.css";
 import "./assets/vendor/font-awesome/css/fontawesome-all.min.css";
@@ -18,15 +20,20 @@ import "./assets/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.c
 class App extends Component {
   render() {
     return (
-      <Fragment>
-        <NavBar />
-        <HomeFront />
-        <FeaturedComics />
-        <ProductTypes />
-        <BestAuthor />
-        <ServiceBanner />
-        <Footer />
-      </Fragment>
+      <Router>
+        <Fragment>
+          <div>
+            <NavBar />
+            <Route exact path="/" component={HomeComponent} />
+            <Switch>
+              <Route exact path="/login" component={LoginComponent} />
+              <Route exact path="/register" component={RegisterComponent} />
+              <Route exact path="/forgotpassword" component={ForgotPassword} />
+            </Switch>
+            <Footer />
+          </div>
+        </Fragment>
+      </Router>
     );
   }
 }
