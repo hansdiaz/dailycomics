@@ -10,6 +10,8 @@ import RegisterComponent from "./components/auth/RegisterComponent";
 import ForgotPassword from "./components/auth/ForgotPassword";
 import Cart from "./components/bodyitems/Cart";
 import Products from "./components/bodyitems/Products";
+import Author from "./components/bodyitems/Author";
+import Product from "./components/bodyitems/Product";
 
 import "./App.css";
 import "./assets/vendor/font-awesome/css/fontawesome-all.min.css";
@@ -32,7 +34,10 @@ class App extends Component {
               <Route exact path="/register" component={RegisterComponent} />
               <Route exact path="/forgotpassword" component={ForgotPassword} />
               <Route exact path="/cart" component={Cart} />
-              <Route exact path="/products" component={Products}/>
+              <Route exact path="/products" component={Products} />
+              <Route exact path="/author" component={Author} />
+              <Route exact path="/product" component={Product} />
+              <Route exact path="/products/product" component={Product} />
             </Switch>
             <Footer />
           </div>

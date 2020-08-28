@@ -13,7 +13,7 @@ const universe = [
   { value: "DC", label: "DC Universe" },
 ];
 
-export default class Cart extends Component {
+export default class Products extends Component {
   // eslint-disable-next-line
   constructor(props) {
     super(props);
@@ -27,13 +27,23 @@ export default class Cart extends Component {
           <div className="container">
             <div className="row">
               <div id="primary" className="content-area order-2">
-                <div className="shop-control-bar d-lg-flex justify-content-between align-items-center mb-5 text-center text-md-left">
-                  <div style={{ minWidth: 300 }}>
-                    <Select options={category} defaultValue={category[0]} />{" "}
-                  </div>
-                  <div style={{ minWidth: 300 }}>
-                    <Select options={universe} defaultValue={universe[0]} />{" "}
-                  </div>
+                <div className="shop-control-bar d-lg-flex justify-content-between ">
+                  <h5>Showing 1–12 of 126 results</h5>
+                  <ul
+                    class="nav justify-content-md-center nav-gray-700 mb-5 flex-nowrap flex-lg-wrap overflow-auto overflow-lg-visible"
+                    role="tablist"
+                  >
+                    <li class="nav-item mx-2 mb-1 flex-shrink-0 flex-lg-shrink-1">
+                      <div style={{ minWidth: 280 }}>
+                        <Select options={category} defaultValue={category[0]} />
+                      </div>
+                    </li>
+                    <li class="nav-item mx-2 mb-1 flex-shrink-0 flex-lg-shrink-1">
+                      <div style={{ minWidth: 280 }}>
+                        <Select options={universe} defaultValue={universe[0]} />
+                      </div>
+                    </li>
+                  </ul>
                 </div>
 
                 <div className="tab-content" id="pills-tabContent">

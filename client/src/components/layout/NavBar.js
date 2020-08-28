@@ -98,7 +98,8 @@ export default class NavBar extends Component {
                     </Link>
                   </li>
                   <li className="nav-item">
-                    <Link to="/cart"
+                    <Link
+                      to="/cart"
                       id="sidebarNavToggler1"
                       role="button"
                       className="nav-link pr-0 text-dark position-relative"
@@ -137,26 +138,20 @@ export default class NavBar extends Component {
                 <div className="site-navigation mr-auto d-none d-xl-block">
                   <ul className="nav">
                     <li className="nav-item">
-                      <Link to="/"
+                      <Link
+                        to="/"
                         className="nav-link link-black-100 mx-2 px-0 py-3 font-weight-medium active border-bottom border-primary border-width-2"
                       >
                         Home
                       </Link>
                     </li>
                     <li className="nav-item">
-                      <Link to="/products"
+                      <Link
+                        to="/products"
                         className="nav-link link-black-100 mx-2 px-0 py-3 font-weight-medium active border-bottom border-primary border-width-2"
                       >
                         Browse Comics
                       </Link>
-                    </li>
-                    <li className="nav-item">
-                      <a
-                        href="#"
-                        className="nav-link link-black-100 mx-2 px-0 py-3 font-weight-medium active border-bottom border-primary border-width-2"
-                      >
-                        Authors
-                      </a>
                     </li>
                   </ul>
                 </div>
