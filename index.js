@@ -9,6 +9,9 @@ const app = express();
 
 connectDB(); //mongoose Mongo DB connection invoke
 
+//Init Middleware
+app.use(express.json({ extended: false }));
+
 const PORT = process.env.PORT || 5000;
 
 app.get("/", (req, res) => res.send("API Running")); //traditional approach of not using seperate functionality layers

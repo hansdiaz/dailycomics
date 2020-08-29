@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { Link } from "react-router-dom";
 
 export default class RegisterComponent extends Component {
@@ -9,9 +9,20 @@ export default class RegisterComponent extends Component {
 
   render() {
     //const element = (<div>Text from Element</div>)
+    const [formData, setFormData] = useState({
+      email: "",
+      password: "",
+      confirmpassword: "",
+    });
+
+    const { email, password, confirmpassword } = formData;
+
+    const onChange = (e) =>
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+
     return (
       <div className="container">
-        <form className="">
+        <form className="form" action="">
           <div className="col-lg-5 mx-auto">
             <header className="px-4 px-md-0 py-6 align-items-center">
               <h2>
@@ -32,6 +43,8 @@ export default class RegisterComponent extends Component {
                     type="email"
                     className="form-control rounded-0 height-4 px-4"
                     name="email"
+                    value={email}
+                    onChange={(e) => onChange(e)}
                     id="signinEmail11"
                     placeholder="creativelayers088@gmail.com"
                     aria-label="creativelayers088@gmail.com"

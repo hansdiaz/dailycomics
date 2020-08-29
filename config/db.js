@@ -5,6 +5,7 @@ const db = config.get("mongoURI");
 const connectDB = async () => {
   try {
     await mongoose.connect(db, {
+      useCreateIndex: true,
       useNewUrlParser: true,
       useUnifiedTopology: true,
     }); //two parameters passed since the single param method call is depreciated
