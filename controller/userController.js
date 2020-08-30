@@ -39,7 +39,7 @@ const userFunction = async (req, res) => {
       res.status(400).json({ errors: [{ msg: "User Already Exists" }] }); //sending the error by json if the user exist hence closing the response
     }
 
-    if (password.toString !== confirmpassword.toString) {
+    if (password == confirmpassword) {
       var avatar = gravatar.url(email, { s: "100", r: "pg", d: "mm" }, true);
 
       user = new User({
@@ -51,7 +51,6 @@ const userFunction = async (req, res) => {
 
       const salt = await genSalt(10);
       user.password = await hash(password, salt);
-
       await user.save();
       res.status(200).send("User Registered");
     } else {

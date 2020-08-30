@@ -12,7 +12,7 @@ export default class HomeFront extends Component {
         <div className="bg-gray-200 py-5 py-lg-8">
           <div className="container my-lg-1">
             <div className="row">
-              <div className="col-wd-8">
+              <div className="col-md-8">
                 <div className="bg-white mb-6 mb-wd-0 h-100">
                   <div className="px-3 px-lg-8 py-8 py-lg-5 space-top-xl-4">
                     <div
@@ -74,7 +74,7 @@ export default class HomeFront extends Component {
                   </div>
                 </div>
               </div>
-              <div className="col-wd-4 d-none d-wd-block">
+              <div className="col-md-4">
                 <div className="pt-5 pt-lg-0 h-100">
                   <div className="bg-white p-6 h-100">
                     <h6 className="font-size-7">

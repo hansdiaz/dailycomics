@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const connectDB = require("./config/db");
 const authRouter = require("./routes/api/auth");
 const authorRouter = require("./routes/api/author");
@@ -10,7 +11,9 @@ const app = express();
 connectDB(); //mongoose Mongo DB connection invoke
 
 //Init Middleware
+app.use(cors());
 app.use(express.json({ extended: false }));
+
 
 const PORT = process.env.PORT || 5000;
 

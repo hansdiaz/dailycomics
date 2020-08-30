@@ -1,28 +1,45 @@
-import React, { Component, useState } from "react";
+import React, { useState, Fragment } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
-export default class RegisterComponent extends Component {
-  // eslint-disable-next-line
-  constructor(props) {
-    super(props);
-  }
+const RegisterComponent = () => {
+  //const element = (<div>Text from Element</div>)
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    confirmpassword: "",
+  });
 
-  render() {
-    //const element = (<div>Text from Element</div>)
-    const [formData, setFormData] = useState({
-      email: "",
-      password: "",
-      confirmpassword: "",
-    });
+  const { email, password, confirmpassword } = formData;
 
-    const { email, password, confirmpassword } = formData;
+  const onChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
-    const onChange = (e) =>
-      setFormData({ ...formData, [e.target.name]: e.target.value });
+  const onSubmit = async (e) => {
+    e.preventDefault();
 
-    return (
+    const newUser = {
+      email,
+      password,
+      confirmpassword,
+    };
+    try {
+      const config = {
+        headers: { "Content-Type": "application/json" },
+        mode: "cors",
+      };
+      const body = JSON.stringify(newUser);
+      const res = await axios.post("http://localhost:5000/user", body, config);
+      console.log(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  return (
+    <Fragment>
       <div className="container">
-        <form className="form" action="">
+        <form className="form" onSubmit={(e) => onSubmit(e)}>
           <div className="col-lg-5 mx-auto">
             <header className="px-4 px-md-0 py-6 align-items-center">
               <h2>
@@ -46,8 +63,8 @@ export default class RegisterComponent extends Component {
                     value={email}
                     onChange={(e) => onChange(e)}
                     id="signinEmail11"
-                    placeholder="creativelayers088@gmail.com"
-                    aria-label="creativelayers088@gmail.com"
+                    placeholder="youremail@gmail.com"
+                    aria-label="youremail@gmail.com"
                     aria-describedby="signinEmailLabel11"
                     required
                   />
@@ -67,6 +84,8 @@ export default class RegisterComponent extends Component {
                     type="password"
                     className="form-control rounded-0 height-4 px-4"
                     name="password"
+                    value={password}
+                    onChange={(e) => onChange(e)}
                     id="signinPassword11"
                     placeholder=""
                     aria-label=""
@@ -79,20 +98,22 @@ export default class RegisterComponent extends Component {
               <div className="form-group mb-4">
                 <div className="js-form-message js-focus-state">
                   <label
-                    id="signupConfirmPasswordLabel9"
+                    id="signinPasswordConfirmLabel"
                     className="form-label"
-                    for="signupConfirmPassword9"
+                    for="signinPasswordConfirm"
                   >
                     Confirm Password *
                   </label>
                   <input
                     type="password"
                     className="form-control rounded-0 height-4 px-4"
-                    name="confirmPassword"
-                    id="signupConfirmPassword9"
+                    name="confirmpassword"
+                    value={confirmpassword}
+                    onChange={(e) => onChange(e)}
+                    id="confirmpassword"
                     placeholder=""
                     aria-label=""
-                    aria-describedby="signupConfirmPasswordLabel9"
+                    aria-describedby="signinPasswordConfirmLabel"
                     required
                   />
                 </div>
@@ -101,6 +122,7 @@ export default class RegisterComponent extends Component {
               <div className="mb-3">
                 <button
                   type="submit"
+                  value="Register"
                   className="btn btn-block py-3 rounded-0 btn-dark"
                 >
                   Create Account
@@ -124,6 +146,7 @@ export default class RegisterComponent extends Component {
           </div>
         </form>
       </div>
-    );
-  }
-}
+    </Fragment>
+  );
+};
+export default RegisterComponent;

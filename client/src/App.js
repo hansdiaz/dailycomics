@@ -28,8 +28,8 @@ class App extends Component {
         <Fragment>
           <div>
             <NavBar />
-            <Route exact path="/" component={HomeComponent} />
             <Switch>
+              <Route exact path="/" component={HomeComponent} />
               <Route exact path="/login" component={LoginComponent} />
               <Route exact path="/register" component={RegisterComponent} />
               <Route exact path="/forgotpassword" component={ForgotPassword} />
