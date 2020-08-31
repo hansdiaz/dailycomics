@@ -26,7 +26,7 @@ export default class LoginComponent extends Component {
                     <label
                       id="signinEmailLabel9"
                       className="form-label"
-                      for="signinEmail9"
+                      htmlFor="signinEmail9"
                     >
                       Username or email *
                     </label>
@@ -48,7 +48,7 @@ export default class LoginComponent extends Component {
                     <label
                       id="signinPasswordLabel9"
                       className="form-label"
-                      for="signinPassword9"
+                      htmlFor="signinPassword9"
                     >
                       Password *
                     </label>

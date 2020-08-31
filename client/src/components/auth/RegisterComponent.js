@@ -2,6 +2,10 @@ import React, { useState, Fragment } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+toast.configure();
+
 const RegisterComponent = () => {
   //const element = (<div>Text from Element</div>)
   const [formData, setFormData] = useState({
@@ -23,6 +27,7 @@ const RegisterComponent = () => {
       password,
       confirmpassword,
     };
+
     try {
       const config = {
         headers: { "Content-Type": "application/json" },
@@ -30,9 +35,12 @@ const RegisterComponent = () => {
       };
       const body = JSON.stringify(newUser);
       const res = await axios.post("http://localhost:5000/user", body, config);
+
       console.log(res.data);
+      toast.success(res.data);
     } catch (err) {
-      console.log(err);
+      toast.error(err.response.data);
+      console.log(err.response.data);
     }
   };
 
@@ -57,7 +65,6 @@ const RegisterComponent = () => {
                     Email *
                   </label>
                   <input
-                    type="email"
                     className="form-control rounded-0 height-4 px-4"
                     name="email"
                     value={email}
@@ -66,7 +73,6 @@ const RegisterComponent = () => {
                     placeholder="youremail@gmail.com"
                     aria-label="youremail@gmail.com"
                     aria-describedby="signinEmailLabel11"
-                    required
                   />
                 </div>
               </div>
@@ -90,7 +96,6 @@ const RegisterComponent = () => {
                     placeholder=""
                     aria-label=""
                     aria-describedby="signinPasswordLabel11"
-                    required
                   />
                 </div>
               </div>
@@ -114,7 +119,6 @@ const RegisterComponent = () => {
                     placeholder=""
                     aria-label=""
                     aria-describedby="signinPasswordConfirmLabel"
-                    required
                   />
                 </div>
               </div>

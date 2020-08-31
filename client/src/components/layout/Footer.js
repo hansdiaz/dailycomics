@@ -221,7 +221,7 @@ export default class Footer extends Component {
                   </div>
                   <form
                     className="js-validate js-form-message"
-                    novalidate="novalidate"
+                    noValidate="novalidate"
                   >
                     <div className="input-group">
                       <input

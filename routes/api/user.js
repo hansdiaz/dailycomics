@@ -8,10 +8,8 @@ const userController = require("../../controller/userController");
 
 userRouter.post(
   "/user",
-  userController.userValidationRules(),
-  userController.validate,
   (req, res) => {
-    {userController.userFunction(req, res);}
+    userController.userFunction(req, res);
   }
 );
 

@@ -72,8 +72,8 @@ export default class NavBar extends Component {
                     </a>
                   </li>
                   <li className="nav-item">
-                    <Link to="/login">
-                      <a
+                    <Link to="/login"
+                      
                         id="sidebarNavToggler"
                         role="button"
                         className="nav-link text-dark"
@@ -94,7 +94,7 @@ export default class NavBar extends Component {
                         data-unfold-duration="500"
                       >
                         <i className="glph-icon flaticon-user font-size-4"></i>
-                      </a>
+                    
                     </Link>
                   </li>
                   <li className="nav-item">
