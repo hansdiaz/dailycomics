@@ -1,7 +1,9 @@
 //const { body, validationResult } = require("express-validator");
-var gravatar = require("gravatar");
+const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
-var validator = require("email-validator");
+const validator = require("email-validator");
+const jwt = require("jsonwebtoken");
+const config = require("config");
 
 const User = require("../models/User");
 
@@ -40,7 +42,23 @@ const userRegistration = async (req, res) => {
       const salt = await bcrypt.genSalt(10);
       user.password = await bcrypt.hash(password, salt);
       await user.save();
-      res.status(200).send("User Registered");
+
+      const payload = {
+        user: {
+          id: user.id,
+        },
+      };
+      jwt.sign(
+        payload,
+        config.get("jwtSecret"),
+        { expiresIn: 36000 },
+        (err, token) => {
+          if (err) throw err;
+          res.json(token);
+        }
+      );
+
+      //res.status(200).send("User Registered");
     } else {
       res.status(400).send("Passwords not matching");
     }

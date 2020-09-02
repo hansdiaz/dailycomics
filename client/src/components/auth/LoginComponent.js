@@ -58,7 +58,6 @@ export default class LoginComponent extends Component {
     //function that retrieves the data from the google authenticator
     console.log(response);
     try {
-
       const googleUser = {
         email: response.email,
         password: response.token,

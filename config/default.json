@@ -1,3 +1,4 @@
 {
-  "mongoURI": "mongodb+srv://hansa:hansa@webapicluster.jmqzu.mongodb.net/dailycomicsdb?retryWrites=true&w=majority"
+  "mongoURI": "mongodb+srv://hansa:hansa@webapicluster.jmqzu.mongodb.net/dailycomicsdb?retryWrites=true&w=majority",
+  "jwtSecret": "dailycomicssecrettoken"
 }
