@@ -1,11 +1,11 @@
 //const { body, validationResult } = require("express-validator");
 var gravatar = require("gravatar");
-const { genSalt, hash } = require("bcryptjs");
+const bcrypt = require("bcryptjs");
 var validator = require("email-validator");
 
 const User = require("../models/User");
 
-const userFunction = async (req, res) => {
+const userRegistration = async (req, res) => {
   try {
     const { email, password, confirmpassword } = req.body;
 
@@ -37,8 +37,8 @@ const userFunction = async (req, res) => {
         avatar,
       });
 
-      const salt = await genSalt(10);
-      user.password = await hash(password, salt);
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(password, salt);
       await user.save();
       res.status(200).send("User Registered");
     } else {
@@ -50,4 +50,41 @@ const userFunction = async (req, res) => {
   }
 };
 
-module.exports = { userFunction };
+const userLogin = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    if (email == "" || password == "") {
+      return res.status(400).send("Not all mandatory values have been set!");
+    }
+    if (validator.validate(email) == false) {
+      return res.status(400).send("Invalid Login email");
+    }
+    if (password.length < 8) {
+      return res.status(400).send("Invalid Login password length");
+    }
+
+    let user = await User.findOne({ email }); //check if user already exists
+
+    if (user) {
+      const isMatch = await bcrypt.compare(password, user.password);
+
+      if (isMatch) {
+        console.log("User Logged in successfully");
+        res.status(200).send("Login Successful");
+      } else {
+        return res.status(400).send("Invalid Login password");
+      }
+    } else {
+      res.status(400).send("Invalid Login Credentails, please register");
+    }
+  } catch (error) {
+    console.log("Error caught at ", error);
+    res.status(500).send("Server Error");
+  }
+};
+
+const googleUserLogin = async (req, res) => {
+  //code comes here after setting heroku for google developer console auth screen confirmation
+};
+module.exports = { userRegistration, userLogin, googleUserLogin };

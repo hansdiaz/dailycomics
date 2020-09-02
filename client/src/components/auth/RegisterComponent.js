@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -6,48 +6,58 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 toast.configure();
 
-const RegisterComponent = () => {
-  //const element = (<div>Text from Element</div>)
-  const [formData, setFormData] = useState({
+export default class RegisterComponent extends React.Component {
+  state = {
     email: "",
     password: "",
     confirmpassword: "",
-  });
+  };
 
-  const { email, password, confirmpassword } = formData;
+  handleChange = (event) => {
+    const target = event.target;
+    const name = target.name;
+    const value = target.value;
 
-  const onChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    this.setState({
+      [name]: value,
+    });
+  };
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
-
-    const newUser = {
-      email,
-      password,
-      confirmpassword,
-    };
-
+  onSubmit = (event) => {
     try {
+      event.preventDefault();
+
+      const newUser = {
+        email: this.state.email,
+        password: this.state.password,
+        confirmpassword: this.state.confirmpassword,
+      };
+
       const config = {
         headers: { "Content-Type": "application/json" },
         mode: "cors",
       };
       const body = JSON.stringify(newUser);
-      const res = await axios.post("http://localhost:5000/user", body, config);
-
-      console.log(res.data);
-      toast.success(res.data);
+      const res = axios
+        .post("http://localhost:5000/createuser", body, config)
+        .then((res) => {
+          console.log(res.data);
+          toast.success(res.data);
+        })
+        .catch((err) => {
+          toast.error(err.response.data);
+          console.log(err.response.data);
+        });
     } catch (err) {
       toast.error(err.response.data);
       console.log(err.response.data);
     }
   };
 
-  return (
-    <Fragment>
+  render() {
+    return (
       <div className="container">
-        <form className="form" onSubmit={(e) => onSubmit(e)}>
+        <form className="form" onSubmit={this.onSubmit}>
           <div className="col-lg-5 mx-auto">
             <header className="px-4 px-md-0 py-6 align-items-center">
               <h2>
@@ -60,18 +70,18 @@ const RegisterComponent = () => {
                   <label
                     id="signinEmailLabel11"
                     className="form-label"
-                    for="signinEmail11"
+                    htmlFor="signinEmail11"
                   >
                     Email *
                   </label>
                   <input
                     className="form-control rounded-0 height-4 px-4"
                     name="email"
-                    value={email}
-                    onChange={(e) => onChange(e)}
+                    value={this.state.email}
+                    onChange={this.handleChange}
                     id="signinEmail11"
-                    placeholder="youremail@gmail.com"
-                    aria-label="youremail@gmail.com"
+                    placeholder="youremail@mail.com"
+                    aria-label="youremail@mail.com"
                     aria-describedby="signinEmailLabel11"
                   />
                 </div>
@@ -82,7 +92,7 @@ const RegisterComponent = () => {
                   <label
                     id="signinPasswordLabel11"
                     className="form-label"
-                    for="signinPassword11"
+                    htmlFor="signinPassword11"
                   >
                     Password *
                   </label>
@@ -90,8 +100,8 @@ const RegisterComponent = () => {
                     type="password"
                     className="form-control rounded-0 height-4 px-4"
                     name="password"
-                    value={password}
-                    onChange={(e) => onChange(e)}
+                    value={this.state.password}
+                    onChange={this.handleChange}
                     id="signinPassword11"
                     placeholder=""
                     aria-label=""
@@ -105,7 +115,7 @@ const RegisterComponent = () => {
                   <label
                     id="signinPasswordConfirmLabel"
                     className="form-label"
-                    for="signinPasswordConfirm"
+                    htmlFor="signinPasswordConfirm"
                   >
                     Confirm Password *
                   </label>
@@ -113,8 +123,8 @@ const RegisterComponent = () => {
                     type="password"
                     className="form-control rounded-0 height-4 px-4"
                     name="confirmpassword"
-                    value={confirmpassword}
-                    onChange={(e) => onChange(e)}
+                    value={this.state.confirmpassword}
+                    onChange={this.handleChange}
                     id="confirmpassword"
                     placeholder=""
                     aria-label=""
@@ -150,7 +160,6 @@ const RegisterComponent = () => {
           </div>
         </form>
       </div>
-    </Fragment>
-  );
-};
-export default RegisterComponent;
+    );
+  }
+}

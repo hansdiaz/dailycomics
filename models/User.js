@@ -8,11 +8,13 @@ const UserSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
   },
   avatar: {
     type: String,
     required: true,
+  },
+  logintoken: {
+    type: String,
   },
   paymenttoken: {
     type: String,

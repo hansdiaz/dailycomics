@@ -1,18 +1,96 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import GoogleLogin, { responseGoogle } from "react-google-login";
+
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+toast.configure();
 
 export default class LoginComponent extends Component {
-  // eslint-disable-next-line
-  constructor(props) {
-    super(props);
-  }
+  state = {
+    email: "",
+    password: "",
+  };
+
+  handleChange = (event) => {
+    const target = event.target;
+    const name = target.name;
+    const value = target.value;
+
+    this.setState({
+      [name]: value,
+    });
+  };
+
+  onSubmit = (event) => {
+    //submit function when
+    try {
+      event.preventDefault();
+
+      const logginUser = {
+        email: this.state.email,
+        password: this.state.password,
+      };
+
+      const config = {
+        headers: { "Content-Type": "application/json" },
+        mode: "cors",
+      };
+      const body = JSON.stringify(logginUser);
+      const res = axios
+        .post("http://localhost:5000/loginuser", body, config)
+        .then((res) => {
+          console.log(res.data);
+          toast.success(res.data);
+        })
+        .catch((err) => {
+          toast.error(err.data);
+          console.log(err.data);
+        });
+    } catch (err) {
+      toast.error(err.response.data);
+      console.log(err.response.data);
+    }
+  };
+
+  responseGoogle = (response) => {
+    //function that retrieves the data from the google authenticator
+    console.log(response);
+    try {
+
+      const googleUser = {
+        email: response.email,
+        password: response.token,
+      };
+
+      const config = {
+        headers: { "Content-Type": "application/json" },
+        mode: "cors",
+      };
+      const body = JSON.stringify(googleUser);
+      const res = axios
+        .post("http://localhost:5000/googleuserlogin", body, config)
+        .then((res) => {
+          console.log(res.data);
+          toast.success(res.data);
+        })
+        .catch((err) => {
+          toast.error(err.data);
+          console.log(err.data);
+        });
+    } catch (err) {
+      toast.error(err.response.data);
+      console.log(err.response.data);
+    }
+  };
 
   render() {
     //const element = (<div>Text from Element</div>)
     return (
       <div className="container">
         <div className="col-lg-5 mx-auto">
-          <form className="">
+          <form className="form" onSubmit={this.onSubmit}>
             <div id="login1" data-target-group="idForm1">
               <header className="px-4 px-md-0 py-6 align-items-center">
                 <h2>
@@ -31,14 +109,14 @@ export default class LoginComponent extends Component {
                       Username or email *
                     </label>
                     <input
-                      type="email"
                       className="form-control rounded-0 height-4 px-4"
                       name="email"
+                      value={this.state.email}
+                      onChange={this.handleChange}
                       id="signinEmail9"
-                      placeholder="creativelayers088@gmail.com"
-                      aria-label="creativelayers088@gmail.com"
+                      placeholder="youremail@mail.com"
+                      aria-label="youremail@mail.com"
                       aria-describedby="signinEmailLabel9"
-                      required
                     />
                   </div>
                 </div>
@@ -56,11 +134,12 @@ export default class LoginComponent extends Component {
                       type="password"
                       className="form-control rounded-0 height-4 px-4"
                       name="password"
+                      value={this.state.password}
+                      onChange={this.handleChange}
                       id="signinPassword9"
                       placeholder=""
                       aria-label=""
                       aria-describedby="signinPasswordLabel9"
-                      required
                     />
                   </div>
                 </div>
@@ -79,6 +158,7 @@ export default class LoginComponent extends Component {
                 <div className="mb-4d75">
                   <button
                     type="submit"
+                    name="login"
                     className="btn btn-block py-3 rounded-0 btn-dark"
                   >
                     Sign In
@@ -94,6 +174,17 @@ export default class LoginComponent extends Component {
                   >
                     Create Account
                   </Link>
+                </div>
+                <br />
+                <div className="mb-2">
+                  <GoogleLogin
+                    clientId="902755353676-ud49nfo423clmkqmpfbq6ghbibiiu1er.apps.googleusercontent.com"
+                    className="js-animation-link btn btn-block py-3 rounded-0 btn-outline-dark font-weight-medium"
+                    buttonText="Login with Google"
+                    onSuccess={this.responseGoogle}
+                    onFailure={responseGoogle}
+                    cookiePolicy={"single_host_origin"}
+                  />
                 </div>
               </div>
             </div>
