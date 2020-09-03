@@ -31,11 +31,10 @@ class App extends Component {
           <div>
             <NavBar />
             <Switch>
-              <Route path="/" component={HomeComponent} />
-              <Route path="/login" component={LoginComponent} />
-              <Route path="/register" component={RegisterComponent} />
-              <Route path="/forgotpassword" component={ForgotPassword} />
-              <Route ProtectedRoute path="/cart" component={Cart} />
+              <Route exact path="/" component={HomeComponent} />
+              <Route exact path="/login" component={LoginComponent} />
+              <Route exact path="/register" component={RegisterComponent} />
+              <Route exact path="/forgotpassword" component={ForgotPassword} />
               <ProtectedRoute
                 path="/cart"
                 redirectRoute="/login"
@@ -49,7 +48,7 @@ class App extends Component {
                       },
                     };
                     const body = JSON.stringify({ payload: "sample data" });
-                    const res = await axios
+                    const res = axios
                       .post("http://localhost:5000/auth", body, config)
                       .then((res) => {
                         return true;
@@ -64,10 +63,10 @@ class App extends Component {
                 component={Cart}
                 exact
               />
-              <Route path="/products" component={Products} />
-              <Route path="/author" component={Author} />
-              <Route path="/product" component={Product} />
-              <Route path="/products/product" component={Product} />
+              <Route exact path="/products" component={Products} />
+              <Route exact path="/author" component={Author} />
+              <Route exact path="/product" component={Product} />
+              <Route exact path="/products/product" component={Product} />
             </Switch>
             <Footer />
           </div>

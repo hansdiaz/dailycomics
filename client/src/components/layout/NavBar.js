@@ -16,7 +16,7 @@ const NavBar = (props) => {
         },
       };
       const body = JSON.stringify({ payload: "sample data" });
-      const res = await axios
+      const res = axios
         .post("http://localhost:5000/auth", body, config)
         .then((res) => {
           console.log(res);
@@ -119,7 +119,8 @@ const NavBar = (props) => {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link to=""
+                  <Link
+                    to=""
                     id="sidebarNavToggler1"
                     role="button"
                     className="nav-link pr-0 text-dark position-relative"

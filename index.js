@@ -11,9 +11,8 @@ const app = express();
 connectDB(); //mongoose Mongo DB connection invoke
 
 //Init Middleware
-app.use(cors());
+app.use(cors({ origin: true }));
 app.use(express.json({ extended: false }));
-
 
 const PORT = process.env.PORT || 5000;
 

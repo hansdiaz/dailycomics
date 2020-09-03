@@ -12,16 +12,16 @@ const User = require("../models/User");
 //custom function for email validation
 
 const userRegistration = async (req, res) => {
+  res.setHeader("Set-Cookie", "HttpOnly;Secure;SameSite=Strict");
+  res.header("Access-Control-Allow-Origin", "*");
   try {
     const { email, password, confirmpassword } = req.body;
 
     if (email == "" || password == "" || confirmpassword == "") {
       return res.status(400).send("Not all mandatory values have been set!");
-    }
-    if (validator.validate(email) == false) {
+    } else if (validator.validate(email) == false) {
       return res.status(400).send("Use a valid email");
-    }
-    if (password.length < 8) {
+    } else if (password.length < 8) {
       return res
         .status(400)
         .send("Password must have atleast eight characters");
@@ -75,20 +75,26 @@ const userRegistration = async (req, res) => {
 };
 
 const userLogin = async (req, res) => {
+  res.setHeader("Set-Cookie", "HttpOnly;Secure;SameSite=Strict");
+  res.header("Access-Control-Allow-Origin", "*");
   try {
-    const { email, password } = req.body;
+    const email = req.body.email;
+    const password = req.body.password;
 
     if (email == "" || password == "") {
-      return res.status(400).send("Not all mandatory values have been set!");
-    }
-    if (validator.validate(email) == false) {
-      return res.status(400).send("Invalid Login email");
-    }
-    if (password.length < 8) {
-      return res.status(400).send("Invalid Login password length");
+      responseObject = { msg: "Not all mandatory values have been set!" };
+      return res.status(400).send(responseObject);
+    } else if (validator.validate(email) == false) {
+      //return res.status(400).send("Invalid Login email");
+      responseObject = { msg: "Invalid Login email" };
+      return res.status(400).send(responseObject);
+    } else if (password.length < 8) {
+      //return res.status(400).send("Invalid Login password length");
+      responseObject = { msg: "Invalid Login password length" };
+      return res.status(400).send(responseObject);
     }
 
-    let user = await User.findOne({ email }); //check if user already exists
+    const user = await User.findOne({ email }); //check if user already exists
 
     if (user) {
       const isMatch = await bcrypt.compare(password, user.password);
@@ -116,14 +122,18 @@ const userLogin = async (req, res) => {
           }
         );
       } else {
-        return res.status(400).send("Invalid Login password");
+        //return res.status(400).send("Invalid Login password");
+        responseObject = { msg: "Invalid Login password" };
+        return res.status(400).send(responseObject);
       }
     } else {
-      res.status(400).send("Invalid Login Credentails, please register");
+      //res.status(400).send("Invalid Login Credentails, please register");
+      responseObject = { msg: "Invalid Login Credentails, please register" };
+      return res.status(400).send(responseObject);
     }
   } catch (error) {
     console.log("Error caught at ", error);
-    res.status(500).send("Server Error");
+    res.status(500).send("Server Error " + error);
   }
 };
 

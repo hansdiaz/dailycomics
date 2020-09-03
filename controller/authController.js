@@ -1,7 +1,10 @@
+const { response } = require("express");
+
 const authFunction = (req, res) => {
   try {
     //Business Function goes here
-    res.send("auth logic comes this page");
+    console.log("auth logic hits this");
+    res.status(200).send();
   } catch (error) {
     console.log("Error caught at ", error);
   }
