@@ -2,25 +2,28 @@ import React, { Component } from "react";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 
-
 const NavBar = (props) => {
   const history = useHistory();
 
-  const tokenizedCartRedirect = (history) => {
+  const tokenizedCartRedirect = async (history) => {
     var token = localStorage.getItem("currentToken");
 
-    if (token != "") {
+    if (token) {
       const config = {
-        headers: { "Content-Type": "application/json", "x-auth-token": token },
-        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+          "x-auth-token": token,
+        },
       };
-      const body = JSON.stringify(token);
-      const res = axios
+      const body = JSON.stringify({ payload: "sample data" });
+      const res = await axios
         .post("http://localhost:5000/auth", body, config)
         .then((res) => {
+          console.log(res);
           history.push("/cart");
         })
         .catch((err) => {
+          console.log(err);
           history.push("/login");
         });
     } else {
@@ -116,7 +119,7 @@ const NavBar = (props) => {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link
+                  <Link to=""
                     id="sidebarNavToggler1"
                     role="button"
                     className="nav-link pr-0 text-dark position-relative"

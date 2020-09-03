@@ -35,7 +35,6 @@ export default class RegisterComponent extends React.Component {
 
       const config = {
         headers: { "Content-Type": "application/json" },
-        mode: "cors",
       };
       const body = JSON.stringify(newUser);
       const res = axios

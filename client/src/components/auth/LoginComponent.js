@@ -35,7 +35,7 @@ export default class LoginComponent extends Component {
 
       const config = {
         headers: { "Content-Type": "application/json" },
-        mode: "cors",
+        mode:"cors"
       };
       const body = JSON.stringify(logginUser);
       const res = axios
@@ -46,7 +46,8 @@ export default class LoginComponent extends Component {
 
           localStorage.setItem("currentToken", res.data.token); //jwt token is saved to the local storage so that it can be accessed from any location
           console.log(
-            "Got this from local storage " + localStorage.getItem("currentToken")
+            "Got this from local storage " +
+              localStorage.getItem("currentToken")
           );
         })
         .catch((err) => {
@@ -54,8 +55,8 @@ export default class LoginComponent extends Component {
           console.log(err.data);
         });
     } catch (err) {
-      toast.error(err.response.data);
-      console.log(err.response.data);
+      //toast.error(err.response.data);
+      console.log(err.data);
     }
   };
 
@@ -76,16 +77,16 @@ export default class LoginComponent extends Component {
       const res = axios
         .post("http://localhost:5000/googleuserlogin", body, config)
         .then((res) => {
-          console.log(res.data);
-          toast.success(res.data);
+          console.log(res.data.msg);
+          toast.success(res.data.msg);
         })
         .catch((err) => {
-          toast.error(err.data);
-          console.log(err.data);
+          toast.error(err.data.msg);
+          console.log(err.data.msg);
         });
     } catch (err) {
-      toast.error(err.response.data);
-      console.log(err.response.data);
+      toast.error(err.data);
+      console.log(err.data);
     }
   };
 
