@@ -1,10 +1,35 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+
+import axios from "axios";
 
 export default class NavBar extends Component {
   // eslint-disable-next-line
   constructor(props) {
     super(props);
+  }
+
+  async tokenizedCartRedirect() {
+    var history = useHistory();
+    var token = localStorage.getItem("currentToken");
+
+    if (token != "") {
+      const config = {
+        headers: { "Content-Type": "application/json", "x-auth-token": token },
+        mode: "cors",
+      };
+      const body = JSON.stringify(token);
+      const res = axios
+        .post("http://localhost:5000/auth", body, config)
+        .then((res) => {
+          history.push("/cart");
+        })
+        .catch((err) => {
+          history.push("/login");
+        });
+    } else {
+      history.push("/login");
+    }
   }
 
   render() {
@@ -72,34 +97,32 @@ export default class NavBar extends Component {
                     </a>
                   </li>
                   <li className="nav-item">
-                    <Link to="/login"
-                      
-                        id="sidebarNavToggler"
-                        role="button"
-                        className="nav-link text-dark"
-                        aria-controls="sidebarContent"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                        data-unfold-event="click"
-                        data-unfold-hide-on-scroll="false"
-                        data-unfold-target="#sidebarContent"
-                        data-unfold-type="css-animation"
-                        data-unfold-overlay='{
+                    <Link
+                      to="/login"
+                      id="sidebarNavToggler"
+                      role="button"
+                      className="nav-link text-dark"
+                      aria-controls="sidebarContent"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                      data-unfold-event="click"
+                      data-unfold-hide-on-scroll="false"
+                      data-unfold-target="#sidebarContent"
+                      data-unfold-type="css-animation"
+                      data-unfold-overlay='{
                                           "className": "u-sidebar-bg-overlay",
                                           "background": "rgba(0, 0, 0, .7)",
                                           "animationSpeed": 500
                                       }'
-                        data-unfold-animation-in="fadeInRight"
-                        data-unfold-animation-out="fadeOutRight"
-                        data-unfold-duration="500"
-                      >
-                        <i className="glph-icon flaticon-user font-size-4"></i>
-                    
+                      data-unfold-animation-in="fadeInRight"
+                      data-unfold-animation-out="fadeOutRight"
+                      data-unfold-duration="500"
+                    >
+                      <i className="glph-icon flaticon-user font-size-4"></i>
                     </Link>
                   </li>
                   <li className="nav-item">
                     <Link
-                      to="/cart"
                       id="sidebarNavToggler1"
                       role="button"
                       className="nav-link pr-0 text-dark position-relative"
@@ -118,14 +141,9 @@ export default class NavBar extends Component {
                       data-unfold-animation-in="fadeInRight"
                       data-unfold-animation-out="fadeOutRight"
                       data-unfold-duration="500"
+                      onClick={this.tokenizedCartRedirect()}
                     >
-                      <span className="ml-1 position-absolute bg-dark width-16 height-16 rounded-circle d-flex align-items-center justify-content-center text-white font-size-n9 left-0">
-                        3
-                      </span>
                       <i className="glph-icon flaticon-icon-126515 font-size-4"></i>
-                      <span className="d-none d-xl-inline h6 mb-0 ml-1">
-                        $40.93
-                      </span>
                     </Link>
                   </li>
                 </ul>

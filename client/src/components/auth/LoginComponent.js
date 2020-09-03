@@ -41,8 +41,13 @@ export default class LoginComponent extends Component {
       const res = axios
         .post("http://localhost:5000/loginuser", body, config)
         .then((res) => {
-          console.log(res.data);
-          toast.success(res.data);
+          console.log(res.data.msg);
+          toast.success(res.data.msg);
+
+          localStorage.setItem("currentToken", res.data.token); //jwt token is saved to the local storage so that it can be accessed from any location
+          console.log(
+            "Got this from local storage " + localStorage.getItem("currentToken")
+          );
         })
         .catch((err) => {
           toast.error(err.data);

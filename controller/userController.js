@@ -4,8 +4,12 @@ const bcrypt = require("bcryptjs");
 const validator = require("email-validator");
 const jwt = require("jsonwebtoken");
 const config = require("config");
+const dateFns = require("date-fns");
+const moment = require("moment");
 
 const User = require("../models/User");
+
+//custom function for email validation
 
 const userRegistration = async (req, res) => {
   try {
@@ -54,11 +58,13 @@ const userRegistration = async (req, res) => {
         { expiresIn: 36000 },
         (err, token) => {
           if (err) throw err;
-          res.json(token);
+          //timeOfExpire = dateFns.addMilliseconds(Date.now, amount);
+          //console.log(timeOfExpire);
+          responseObject = { token: token, msg: "User Registered" };
+          console.log("User Registered in successfully");
+          res.json(responseObject);
         }
       );
-
-      //res.status(200).send("User Registered");
     } else {
       res.status(400).send("Passwords not matching");
     }
@@ -88,8 +94,27 @@ const userLogin = async (req, res) => {
       const isMatch = await bcrypt.compare(password, user.password);
 
       if (isMatch) {
-        console.log("User Logged in successfully");
-        res.status(200).send("Login Successful");
+        const payload = {
+          user: {
+            id: user.id,
+          },
+        };
+        jwt.sign(
+          payload,
+          config.get("jwtSecret"),
+          { expiresIn: 36000 },
+          async (err, token) => {
+            if (err) throw err;
+            //timeOfExpire =await dateFns.addMilliseconds(Date.now, 36000);
+            //var timeOfExpire = await moment().add(36000, "milliseconds");
+            var timeOfExpire = new Date(Date.now() + 36000);
+            console.log(timeOfExpire);
+            responseObject = { token: token, msg: "Login Successful" };
+
+            console.log("User Logged in successfully");
+            res.json(responseObject);
+          }
+        );
       } else {
         return res.status(400).send("Invalid Login password");
       }
