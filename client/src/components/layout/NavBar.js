@@ -3,33 +3,6 @@ import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 
 export default class NavBar extends Component {
-  /*const history = useHistory();
-
-  const tokenizedCartRedirect = async (history) => {
-    var token = localStorage.getItem("currentToken");
-
-    if (token) {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          "x-auth-token": token,
-        },
-      };
-      const body = JSON.stringify({ payload: "sample data" });
-      const res = axios
-        .post("http://localhost:5000/auth", body, config)
-        .then((res) => {
-          console.log(res);
-          history.push("/cart");
-        })
-        .catch((err) => {
-          console.log(err);
-          history.push("/login");
-        });
-    } else {
-      history.push("/login");
-    }
-  };*/
   render() {
     return (
       <header id="site-header" className="site-header__v7">

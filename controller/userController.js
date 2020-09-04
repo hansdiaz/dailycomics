@@ -140,4 +140,19 @@ const userLogin = async (req, res) => {
 const googleUserLogin = async (req, res) => {
   //code comes here after setting heroku for google developer console auth screen confirmation
 };
-module.exports = { userRegistration, userLogin, googleUserLogin };
+
+const userUpdate = async (req, res) => {
+  
+};
+
+const userDeletion = async (req, res) => {
+  
+};
+
+module.exports = {
+  userRegistration,
+  userLogin,
+  googleUserLogin,
+  userUpdate,
+  userDeletion,
+};

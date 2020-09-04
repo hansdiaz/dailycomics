@@ -1,7 +1,7 @@
 import React, { Fragment, Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import ProtectedRoute from "react-protected-route-component";
-import axios from "axios";
+import setAuthToken from "./util/setAuthToken";
 
 import NavBar from "../src/components/layout/NavBar";
 import Footer from "../src/components/layout/Footer";
@@ -38,29 +38,11 @@ class App extends Component {
               <ProtectedRoute
                 path="/cart"
                 redirectRoute="/login"
-                guardFunction={async () => {
-                  const token = localStorage.getItem("currentToken"); //check wheter ther is a token in the storge if yes, send an axios request that is secured(/auth) and from its return determine whther token is valid or nopt then redirect
-                  if (token) {
-                    const config = {
-                      headers: {
-                        "Access-Control-Allow-Headers": "x-auth-token",
-                        "Content-Type": "application/json",
-                        "x-auth-token": token,
-                      },
-                    };
-                    const body = JSON.stringify({ payload: "sample data" });
-                    const res = axios
-                      .post("http://localhost:5000/auth", body, config)
-                      .then((res) => {
-                        console.log(res.response);
-                        return true;
-                      })
-                      .catch((err) => {
-                        console.log(err.response.data.error);
-                        return true;
-                      });
-                  } else {
+                guardFunction={() => {
+                  if (setAuthToken()) {
                     return true;
+                  } else {
+                    return false;
                   }
                 }}
                 component={Cart}

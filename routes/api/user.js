@@ -13,7 +13,13 @@ userRouter.post("/createuser",cors({ origin: true }), (req, res) => {
   userController.userRegistration(req, res);
 });
 
+userRouter.put("/updateuser",cors({ origin: true }), (req, res) => {
+  userController.userUpdate(req, res);
+});
 
+userRouter.delete("/deleteuser",cors({ origin: true }), (req, res) => {
+  userController.userDeletion(req, res);
+});
 
 userRouter.post("/googleuserlogin",cors({ origin: true }), (req, res) => {
   userController.googleUserLogin(req, res);
