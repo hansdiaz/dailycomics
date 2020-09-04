@@ -45,9 +45,12 @@ export default class LoginComponent extends Component {
           toast.success(res.data.msg);
 
           localStorage.setItem("currentToken", res.data.token); //jwt token is saved to the local storage so that it can be accessed from any location
+          localStorage.setItem("id", res.data.id);
           console.log(
             "Got this from local storage " +
-              localStorage.getItem("currentToken")
+              localStorage.getItem("currentToken") +
+              "\n  and User ID " +
+              localStorage.getItem("id")
           );
         })
         .catch((err) => {

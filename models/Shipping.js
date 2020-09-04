@@ -10,25 +10,23 @@ const ShippingSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  shipping_info: {
-    address: {
-      type: String,
-      required: true,
-    },
-    postalcode: {
-      type: Number,
-    },
-    city: {
-      type: String,
-      required: true,
-    },
-    country: {
-      type: String,
-      required: true,
-    },
-    phonenumber: {
-      type: Number,
-    },
+  address: {
+    type: String,
+    required: true,
+  },
+  postalcode: {
+    type: Number,
+  },
+  city: {
+    type: String,
+    required: true,
+  },
+  country: {
+    type: String,
+    required: true,
+  },
+  phonenumber: {
+    type: Number,
   },
 });
 

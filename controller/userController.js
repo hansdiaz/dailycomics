@@ -8,9 +8,9 @@ const dateFns = require("date-fns");
 const moment = require("moment");
 
 const User = require("../models/User");
+const { response } = require("express");
 
-//custom function for email validation
-
+//Registration
 const userRegistration = async (req, res) => {
   res.setHeader("Set-Cookie", "HttpOnly;Secure;SameSite=Strict");
   res.header("Access-Control-Allow-Origin", "*");
@@ -74,6 +74,7 @@ const userRegistration = async (req, res) => {
   }
 };
 
+//login
 const userLogin = async (req, res) => {
   res.setHeader("Set-Cookie", "HttpOnly;Secure;SameSite=Strict");
   res.header("Access-Control-Allow-Origin", "*");
@@ -86,11 +87,11 @@ const userLogin = async (req, res) => {
       return res.status(400).send(responseObject);
     } else if (validator.validate(email) == false) {
       //return res.status(400).send("Invalid Login email");
-      responseObject = { msg: "Invalid Login email" };
+      responseObject = { msg: "Invalid Login Credentails" };
       return res.status(400).send(responseObject);
     } else if (password.length < 8) {
       //return res.status(400).send("Invalid Login password length");
-      responseObject = { msg: "Invalid Login password length" };
+      responseObject = { msg: "Invalid Login Credentails" };
       return res.status(400).send(responseObject);
     }
 
@@ -115,7 +116,11 @@ const userLogin = async (req, res) => {
             //var timeOfExpire = await moment().add(36000, "milliseconds");
             var timeOfExpire = new Date(Date.now() + 36000);
             console.log(timeOfExpire);
-            responseObject = { token: token, msg: "Login Successful" };
+            responseObject = {
+              id: user.id,
+              token: token,
+              msg: "Login Successful",
+            };
 
             console.log("User Logged in successfully");
             res.json(responseObject);
@@ -123,7 +128,7 @@ const userLogin = async (req, res) => {
         );
       } else {
         //return res.status(400).send("Invalid Login password");
-        responseObject = { msg: "Invalid Login password" };
+        responseObject = { msg: "Invalid Login Credentails" };
         return res.status(400).send(responseObject);
       }
     } else {
@@ -137,16 +142,98 @@ const userLogin = async (req, res) => {
   }
 };
 
+//GoogleLogin
 const googleUserLogin = async (req, res) => {
   //code comes here after setting heroku for google developer console auth screen confirmation
 };
 
+//Update
 const userUpdate = async (req, res) => {
-  
+  try {
+    var errors = {};
+    var userpassword = req.body.password;
+    var id = req.body._id;
+    const salt = await bcrypt.genSalt(10);
+    var encryptedPassword = await bcrypt.hash(userpassword, salt);
+    console.log(userpassword, id);
+    const userUpdate = await User.findOneAndUpdate(
+      { _id: id },
+      { password: encryptedPassword }
+    )
+      .then((userUpdate) => {
+        if (userUpdate) {
+          return res.status(200).json({ updatesuccess: true });
+        } else {
+          errors = "There is no user to update";
+          return res.status(404).json(errors);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(404).json({ users: "There is no user profile to update" });
+      });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
+//UserDelete
 const userDeletion = async (req, res) => {
-  
+  const errors = {};
+
+  const userDeletion = User.findOneAndDelete({ _id: req.params.id })
+    .then((userDeletion) => {
+      if (userDeletion) {
+        return res.status(200).json({ success: true });
+      } else {
+        errors = "There is no user";
+        return res.status(404).json(errors);
+      }
+    })
+    .catch((err) =>
+      res.status(404).json({ users: "There is no user profile" })
+    );
+};
+
+//get All Users
+const getAllUsers = async (req, res) => {
+  const errors = {};
+
+  const userProfiles = User.find({}, { email: 1, avatar: 1, date: 1 })
+    .populate("users")
+    .then((userProfiles) => {
+      if (userProfiles) {
+        return res.status(200).json(userProfiles);
+      } else {
+        errors = "There are no users";
+        return res.status(404).json(errors);
+      }
+    })
+    .catch((err) =>
+      res.status(404).json({ users: "There are no user profiles" })
+    );
+};
+
+//get Single user
+const getUser = async (req, res) => {
+  const errors = {};
+
+  const userProfile = User.find(
+    { _id: req.params.id },
+    { email: 1, avatar: 1, date: 1 }
+  )
+    .populate("users")
+    .then((userProfile) => {
+      if (userProfile) {
+        return res.status(200).json(userProfile);
+      } else {
+        errors = "There is no user";
+        return res.status(404).json(errors);
+      }
+    })
+    .catch((err) =>
+      res.status(404).json({ users: "There is no user profile" })
+    );
 };
 
 module.exports = {
@@ -155,4 +242,6 @@ module.exports = {
   googleUserLogin,
   userUpdate,
   userDeletion,
+  getAllUsers,
+  getUser,
 };
