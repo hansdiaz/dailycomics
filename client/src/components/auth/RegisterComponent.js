@@ -23,7 +23,7 @@ export default class RegisterComponent extends React.Component {
     });
   };
 
-  onSubmit = (event) => {
+  onSubmit = async (event) => {
     try {
       event.preventDefault();
 
@@ -37,8 +37,8 @@ export default class RegisterComponent extends React.Component {
         headers: { "Content-Type": "application/json" },
       };
       const body = JSON.stringify(newUser);
-      const res = axios
-        .post("http://localhost:5000/createuser", body, config)
+      const res = await axios
+        .post("http://localhost:5000/createuser", body, config) 
         .then((res) => {
           console.log(res.data.msg);
           toast.success(res.data.msg);

@@ -23,7 +23,7 @@ export default class LoginComponent extends Component {
     });
   };
 
-  onSubmit = (event) => {
+  onSubmit = async (event) => {
     //submit function when
     try {
       event.preventDefault();
@@ -35,10 +35,10 @@ export default class LoginComponent extends Component {
 
       const config = {
         headers: { "Content-Type": "application/json" },
-        mode:"cors"
+        mode: "cors",
       };
       const body = JSON.stringify(logginUser);
-      const res = axios
+      const res = await axios
         .post("http://localhost:5000/loginuser", body, config)
         .then((res) => {
           console.log(res.data.msg);
@@ -51,12 +51,12 @@ export default class LoginComponent extends Component {
           );
         })
         .catch((err) => {
-          toast.error(err.data);
-          console.log(err.data);
+          toast.error(err.response.data.msg);
+          console.log(err.response.data.msg); //the long response is cus the issue is that the api on what a rejected promise returns has changed.so it needs to be digged in deep
         });
     } catch (err) {
-      //toast.error(err.response.data);
-      console.log(err.data);
+      toast.error(err.response.data.msg);
+      console.log(err.response.data.msg);
     }
   };
 

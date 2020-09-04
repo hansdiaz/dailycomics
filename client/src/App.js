@@ -38,11 +38,12 @@ class App extends Component {
               <ProtectedRoute
                 path="/cart"
                 redirectRoute="/login"
-                guardFunction={() => {
-                  const token = localStorage.getItem("token");      //check wheter ther is a token in the storge if yes, send an axios request that is secured(/auth) and from its return determine whther token is valid or nopt then redirect
+                guardFunction={async () => {
+                  const token = localStorage.getItem("currentToken"); //check wheter ther is a token in the storge if yes, send an axios request that is secured(/auth) and from its return determine whther token is valid or nopt then redirect
                   if (token) {
                     const config = {
                       headers: {
+                        "Access-Control-Allow-Headers": "x-auth-token",
                         "Content-Type": "application/json",
                         "x-auth-token": token,
                       },
@@ -51,13 +52,15 @@ class App extends Component {
                     const res = axios
                       .post("http://localhost:5000/auth", body, config)
                       .then((res) => {
+                        console.log(res.response);
                         return true;
                       })
                       .catch((err) => {
-                        return false;
+                        console.log(err.response.data.error);
+                        return true;
                       });
                   } else {
-                    return false;
+                    return true;
                   }
                 }}
                 component={Cart}
