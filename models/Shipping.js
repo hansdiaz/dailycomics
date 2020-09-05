@@ -1,10 +1,11 @@
 const mongoose = require("mongoose");
+var Schema = mongoose.Schema;
 
-const ShippingSchema = new mongoose.Schema({
+const ShippingSchema = Schema({
   user_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "user",
+    type: String,
     required: true,
+    unique: true,
   },
   name: {
     type: String,
@@ -15,7 +16,7 @@ const ShippingSchema = new mongoose.Schema({
     required: true,
   },
   postalcode: {
-    type: Number,
+    type: String,
   },
   city: {
     type: String,
@@ -30,4 +31,4 @@ const ShippingSchema = new mongoose.Schema({
   },
 });
 
-module.exports = Shipping = mongoose.model("shipping", shippingSchema);
+module.exports = Shipping = mongoose.model("shipping", ShippingSchema);

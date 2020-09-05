@@ -2,19 +2,16 @@ const mongoose = require("mongoose");
 
 const StockSchema = new mongoose.Schema({
   comicissue_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "comicissue",
+    type: String,
     required: true,
   },
-  singlestock: {
-    hb_stock: {
-      type: Number,
-      required: true,
-    },
-    pb_stock: {
-      type: Number,
-      required: true,
-    },
+  hb_stock: {
+    type: Number,
+    required: true,
+  },
+  pb_stock: {
+    type: Number,
+    required: true,
   },
 });
 

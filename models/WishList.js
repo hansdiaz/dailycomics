@@ -2,14 +2,13 @@ const mongoose = require("mongoose");
 
 const WishListSchema = new mongoose.Schema({
   user_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "user",
+    type: String,
     required: true,
   },
   comicissue_id: [
     {
-      type: ObjectId,
-      ref: "comicissue",
+      type: String,
+      required: true,
     },
   ],
 });

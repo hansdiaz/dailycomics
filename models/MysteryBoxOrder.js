@@ -2,15 +2,14 @@ const mongoose = require("mongoose");
 
 const MysteryBoxOrderSchema = new mongoose.Schema({
   user_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "user",
+    type: String,
     required: true,
   },
   order_date: {
     type: Date,
     default: Date.now,
   },
-  subscription: {
+  subscription_status: {
     type: String,
     required: true,
   },

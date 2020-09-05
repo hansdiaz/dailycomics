@@ -2,37 +2,34 @@ const mongoose = require("mongoose");
 
 const PriceSchema = new mongoose.Schema({
   comicissue_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "comicissue",
+    type: String,
     required: true,
   },
-  single_price: {
-    eb_price: {
-      type: Number,
-      required: true,
-    },
-    hb_price: {
-      type: Number,
-      required: true,
-    },
-    pb_price: {
-      type: Number,
-      required: true,
-    },
+
+  eb_price: {
+    type: Number,
+    required: true,
   },
-  subsrciption_price: {
-    daily_price: {
-      type: Number,
-      required: true,
-    },
-    weekly_price: {
-      type: Number,
-      required: true,
-    },
-    monthly_price: {
-      type: Number,
-      required: true,
-    },
+  hb_price: {
+    type: Number,
+    required: true,
+  },
+  pb_price: {
+    type: Number,
+    required: true,
+  },
+
+  daily_price: {
+    type: Number,
+    required: true,
+  },
+  weekly_price: {
+    type: Number,
+    required: true,
+  },
+  monthly_price: {
+    type: Number,
+    required: true,
   },
 });
 
