@@ -4,22 +4,14 @@ const PriceSchema = new mongoose.Schema({
   comicissue_id: {
     type: String,
     required: true,
+    unique: true,
   },
 
-  eb_price: {
-    type: Number,
-    required: true,
-  },
   hb_price: {
     type: Number,
     required: true,
   },
   pb_price: {
-    type: Number,
-    required: true,
-  },
-
-  daily_price: {
     type: Number,
     required: true,
   },

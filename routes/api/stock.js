@@ -1,26 +1,26 @@
 const express = require("express");
 const cors = require("cors");
-const comicRouter = express.Router();
-const comicController = require("../../controller/comicController");
+const stockRouter = express.Router();
+const stockController = require("../../controller/stockController");
 
-comicRouter.get("/allstocks", cors({ origin: true }), (req, res) => {
-  comicController.getAllStock(req, res);
+stockRouter.get("/allstocks", cors({ origin: true }), (req, res) => {
+  stockController.getAllStock(req, res);
 });
 
-comicRouter.get("/stock/:id", cors({ origin: true }), (req, res) => {
-  comicController.getStockById(req, res);
+stockRouter.get("/stock/:id", cors({ origin: true }), (req, res) => {
+  stockController.getStock(req, res);
 });
 
-comicRouter.post("/stocksave", cors({ origin: true }), (req, res) => {
-  comicController.stockSave(req, res);
+stockRouter.post("/stocksave", cors({ origin: true }), (req, res) => {
+  stockController.stockSave(req, res);
 });
 
-comicRouter.put("/stockupdate", cors({ origin: true }), (req, res) => {
-  comicController.stockUpdate(req, res);
+stockRouter.put("/stockupdate", cors({ origin: true }), (req, res) => {
+  stockController.stockUpdate(req, res);
 });
 
-comicRouter.delete("/deletestock/:id", cors({ origin: true }), (req, res) => {
-  comicController.deleteStock(req, res);
+stockRouter.delete("/deletestock/:id", cors({ origin: true }), (req, res) => {
+  stockController.deleteStock(req, res);
 });
 
-module.exports = comicRouter;
+module.exports = stockRouter;

@@ -6,6 +6,9 @@ const comicRouter = require("./routes/api/comic");
 const userRouter = require("./routes/api/user");
 const shippingRouter = require("./routes/api/shipping");
 const seriesComicRouter = require("./routes/api/seriesComic");
+const stockRouter = require("./routes/api/stock");
+const priceRouter = require("./routes/api/price");
+const orderitemRouter = require("./routes/api/orderitem");
 
 const app = express();
 
@@ -24,7 +27,8 @@ app.use(userRouter);
 app.use(shippingRouter);
 app.use(seriesComicRouter);
 app.use(comicRouter);
-
-
+app.use(stockRouter);
+app.use(priceRouter);
+app.use(orderitemRouter);
 
 app.listen(PORT, () => console.log("Server Started on port ", PORT));

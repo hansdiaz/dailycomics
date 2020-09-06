@@ -4,6 +4,7 @@ const StockSchema = new mongoose.Schema({
   comicissue_id: {
     type: String,
     required: true,
+    unique: true,
   },
   hb_stock: {
     type: Number,

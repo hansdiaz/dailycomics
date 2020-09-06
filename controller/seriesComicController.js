@@ -153,9 +153,26 @@ const getSeries = async (req, res) => {
     );
 };
 
+//Delete comic issue
+const deleteSeries = async (req, res) => {
+  const errors = {};
+
+  const seriesDeletion = SeriesComic.findOneAndDelete({ _id: req.params.id })
+    .then((seriesDeletion) => {
+      if (seriesDeletion) {
+        return res.status(200).json({ success: true });
+      } else {
+        errors = "There is no series to delete with this id";
+        return res.status(404).json(errors);
+      }
+    })
+    .catch((err) => res.status(404).json({ data: "failed to delete series" }));
+};
+
 module.exports = {
   seriesSave,
   seriesUpdate,
   getAllSeries,
   getSeries,
+  deleteSeries,
 };

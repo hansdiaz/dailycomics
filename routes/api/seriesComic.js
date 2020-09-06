@@ -28,4 +28,8 @@ SeriesComicRouter.put("/seriesupdate", cors({ origin: true }), (req, res) => {
   SeriesComicController.seriesUpdate(req, res);
 });
 
+SeriesComicRouter.delete("/deleteseries/:id", cors({ origin: true }), (req, res) => {
+  SeriesComicController.deleteSeries(req, res);
+});
+
 module.exports = SeriesComicRouter;
