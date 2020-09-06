@@ -1,17 +1,13 @@
 const mongoose = require("mongoose");
 
 const ComicIssueSchema = new mongoose.Schema({
-  seriesid: {
+  seriesname: {
     type: String,
     required: true,
   },
   issuenumber: {
     type: Number,
     required: true,
-  },
-  publishdate: {
-    type: Date,
-    default: Date.now,
   },
   description: {
     type: String,
@@ -20,6 +16,10 @@ const ComicIssueSchema = new mongoose.Schema({
   imageref: {
     type: String,
     required: true,
+  },
+  publishdate: {
+    type: Date,
+    default: Date.now,
   },
 });
 

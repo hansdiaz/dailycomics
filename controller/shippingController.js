@@ -1,13 +1,5 @@
-//const { body, validationResult } = require("express-validator");
-const gravatar = require("gravatar");
-const bcrypt = require("bcryptjs");
-const validator = require("email-validator");
-const jwt = require("jsonwebtoken");
-const config = require("config");
-
 const Shipping = require("../models/Shipping");
 const User = require("../models/User");
-const { response } = require("express");
 
 //Registration
 const shippingSave = async (req, res) => {
@@ -110,14 +102,14 @@ const shippingUpdate = async (req, res) => {
         if (shippingUpdate) {
           return res.status(200).json({ updatesuccess: true });
         } else {
-          errors = "There is no shipping data for this user to update 1";
+          errors = "There is no shipping data for this user to update";
           return res.status(404).json(errors);
         }
       })
       .catch((err) => {
         console.log(err);
         res.status(404).json({
-          users: "There is no shipping data for this user to update 2",
+          users: "There is no shipping data for this user to update",
         });
       });
   } catch (error) {
@@ -192,7 +184,27 @@ const getShipping = async (req, res) => {
     .catch((err) =>
       res
         .status(404)
-        .json({ users: "There are no shipping details for this user" })
+        .json({ data: "There are no shipping details for this user" })
+    );
+};
+
+//Delete comic issue
+const deleteShipping = async (req, res) => {
+  const errors = {};
+
+  const shippingDetailsDeletion = Shipping.findOneAndDelete({
+    _id: req.params.id,
+  })
+    .then((shippingDetailsDeletion) => {
+      if (shippingDetailsDeletion) {
+        return res.status(200).json({ success: true });
+      } else {
+        errors = "There is no shipping details to delete with this id";
+        return res.status(404).json(errors);
+      }
+    })
+    .catch((err) =>
+      res.status(404).json({ data: "failed to delete shipping details" })
     );
 };
 
@@ -201,4 +213,5 @@ module.exports = {
   shippingUpdate,
   getAllShipping,
   getShipping,
+  deleteShipping,
 };

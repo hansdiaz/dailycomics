@@ -6,18 +6,15 @@ const ComicSeriesSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  author_id: [
-    {
-      type: String,
-      require: true,
-    },
-  ],
-  category: [
-    {
-      type: String,
-      required: true,
-    },
-  ],
+  authorname: {
+    type: String,
+    require: true,
+  },
+
+  category: {
+    type: String,
+    required: true,
+  },
   universe: {
     type: String,
     required: true,

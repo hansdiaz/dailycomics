@@ -1,4 +1,3 @@
-//const { body, validationResult } = require("express-validator");
 const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
 const validator = require("email-validator");
@@ -8,7 +7,6 @@ const dateFns = require("date-fns");
 const moment = require("moment");
 
 const User = require("../models/User");
-const { response } = require("express");
 
 //Registration
 const userRegistration = async (req, res) => {

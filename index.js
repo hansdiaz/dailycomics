@@ -2,10 +2,10 @@ const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/db");
 const authRouter = require("./routes/api/auth");
-const authorRouter = require("./routes/api/author");
 const comicRouter = require("./routes/api/comic");
 const userRouter = require("./routes/api/user");
 const shippingRouter = require("./routes/api/shipping");
+const seriesComicRouter = require("./routes/api/seriesComic");
 
 const app = express();
 
@@ -22,8 +22,7 @@ app.get("/", (req, res) => res.send("API Running")); //traditional approach of n
 app.use(authRouter); //using the MVC approach on nodejs
 app.use(userRouter);
 app.use(shippingRouter);
-
-app.use(authorRouter);
+app.use(seriesComicRouter);
 app.use(comicRouter);
 
 app.listen(PORT, () => console.log("Server Started on port ", PORT));

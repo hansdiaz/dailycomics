@@ -20,4 +20,8 @@ ShippingRouter.put("/usershippingupdate", cors({ origin: true }), (req, res) => 
   ShippingController.shippingUpdate(req, res);
 });
 
+ShippingRouter.delete("/deleteshippingdetails/:id", cors({ origin: true }), (req, res) => {
+  ShippingController.deleteShipping(req, res);
+});
+
 module.exports = ShippingRouter;
