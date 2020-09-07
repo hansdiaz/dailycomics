@@ -7,6 +7,7 @@ const comicSave = async (req, res) => {
     let issuenumber = req.body.issuenumber;
     let description = req.body.description;
     let imageref = req.body.imageref;
+    let seriesExist;
 
     if (
       seriesname == false ||
@@ -16,8 +17,15 @@ const comicSave = async (req, res) => {
     ) {
       return res.status(400).send("Not all mandatory values have been set!");
     }
-
-    let seriesExist = await SeriesComic.findOne({ seriesname: seriesname });
+    let authorname;
+    seriesExist = await SeriesComic.findOne({
+      seriesname: seriesname,
+    }).then((seriesExist) => {
+      console.log(
+        "this is taken to add to product page " + seriesExist.authorname
+      );
+      authorname = seriesExist.authorname;
+    });
 
     if (seriesExist == false) {
       //check the existence of the series in series collection
@@ -39,6 +47,7 @@ const comicSave = async (req, res) => {
       seriesname,
       issuenumber,
       description,
+      authorname,
       imageref,
     });
 
@@ -136,6 +145,7 @@ const getAllComics = async (req, res) => {
       seriesname: 1,
       issuenumber: 1,
       description: 1,
+      authorname: 1,
       imageref: 1,
       publishdate: 1,
     }
@@ -165,6 +175,7 @@ const getComicById = async (req, res) => {
       seriesname: 1,
       issuenumber: 1,
       description: 1,
+      authorname: 1,
       imageref: 1,
       publishdate: 1,
     }
@@ -199,6 +210,7 @@ const getComicByName = async (req, res) => {
       seriesname: 1,
       issuenumber: 1,
       description: 1,
+      authorname: 1,
       imageref: 1,
       publishdate: 1,
     }
@@ -230,9 +242,7 @@ const deleteComic = async (req, res) => {
         return res.status(404).json(errors);
       }
     })
-    .catch((err) =>
-      res.status(404).json({ data: "failed to delete item" })
-    );
+    .catch((err) => res.status(404).json({ data: "failed to delete item" }));
 };
 
 module.exports = {
@@ -241,5 +251,5 @@ module.exports = {
   getAllComics,
   getComicById,
   getComicByName,
-  deleteComic
+  deleteComic,
 };

@@ -1,22 +1,51 @@
 import React, { Component } from "react";
 import Select from "react-select";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
 const purchaseType = [
-  { value: "esingle", label: "Ebook Single" },
   { value: "pbsingle", label: "PaperBack Single" },
   { value: "hbsingle", label: "HardBack Single" },
-  { value: "esingle", label: "Ebook Single" },
-  { value: "esub", label: "Ebook Subscription" },
-  { value: "pbsub", label: "PaperBack Subscription" },
+  { value: "wsub", label: "Weekly Subscription" },
+  { value: "msub", label: "Monthly Subscription" },
 ];
 
 export default class Product extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      comicId: null,
+      selectedOption: null,
+      comicPrice: null,
+      priceCurrency: "$",
+      currencyVisibility: null,
+      issueObjectState: null,
+      seriesObjectState: null,
+      pricingObjectState: null,
+    };
   }
 
+  handleChange = (selectedOption) => {
+    //handling price
+    let comicprice;
+    if (selectedOption.value == "pbsingle") {
+      comicprice = this.state.pricingObjectState.pb_price;
+      this.setState({ comicPrice: comicprice });
+    } else if (selectedOption.value == "hbsingle") {
+      comicprice = this.state.pricingObjectState.hb_price;
+      this.setState({ comicPrice: comicprice });
+    } else if (selectedOption.value == "wsub") {
+      comicprice = this.state.pricingObjectState.weekly_price;
+      this.setState({ comicPrice: comicprice });
+    } else if (selectedOption.value == "msub") {
+      comicprice = this.state.pricingObjectState.monthly_price;
+      this.setState({ comicPrice: comicprice });
+    }
+
+    console.log(`updated price:`, comicprice);
+  };
+
   render() {
-    //const element = (<div>Text from Element</div>)
     return (
       <div id="primary" className="content-area">
         <div className="product">
@@ -31,11 +60,13 @@ export default class Product extends Component {
                       data-vertical="true"
                     >
                       <div className="js-slide">
-                        <img
-                          src={require("../../assets/img/300x452/img5.jpg")}
-                          alt="Image Description"
-                          className="mx-auto img-fluid"
-                        />
+                        {this.state.issueObjectState && (
+                          <img
+                            src={this.state.issueObjectState.imageref}
+                            alt="Image Description"
+                            className="mx-auto img-fluid"
+                          />
+                        )}
                       </div>
                     </div>
                   </figure>
@@ -45,15 +76,23 @@ export default class Product extends Component {
                     <div className="py-4 px-5">
                       <div className="border-bottom mb-4">
                         <h1 className="product_title entry-title font-size-26 mb-3">
-                          Where the Crawdads Sing
+                          {this.state.issueObjectState &&
+                            this.state.issueObjectState.seriesname}
                         </h1>
+                        <p>
+                          issue#
+                          {this.state.issueObjectState &&
+                            this.state.issueObjectState.issuenumber}
+                        </p>
+
                         <div className="font-size-2 mb-4 justify-content-between row">
                           <div>
                             <span className="ml-3 font-weight-medium">
                               By (author)
                             </span>
                             <span className="ml-2 text-gray-600">
-                              Anna Banks
+                              {this.state.seriesObjectState &&
+                                this.state.seriesObjectState.authorname}
                             </span>
                           </div>
                         </div>
@@ -61,9 +100,9 @@ export default class Product extends Component {
                       <p className="price font-size-22 font-weight-medium mb-4">
                         <span className="woocommerce-Price-amount amount">
                           <span className="woocommerce-Price-currencySymbol">
-                            $
+                            {this.state.priceCurrency}
                           </span>
-                          4.95
+                          {this.state.comicPrice}
                         </span>
                       </p>
                       <label className="form-label font-size-2 font-weight-medium">
@@ -74,12 +113,12 @@ export default class Product extends Component {
                         <Select
                           options={purchaseType}
                           defaultValue={purchaseType[0]}
+                          onChange={this.handleChange}
                         />
                       </div>
-
+                      <br />
                       <form
                         className="cart mb-4 d-md-flex align-items-end"
-                        method="post"
                         enctype="multipart/form-data"
                       >
                         <button
@@ -97,11 +136,6 @@ export default class Product extends Component {
                           <a href="#" className="h-primary">
                             <i className="flaticon-heart mr-2"></i> Add to
                             Wishlist
-                          </a>
-                        </li>
-                        <li className="">
-                          <a href="#" className="h-primary">
-                            <i className="flaticon-share mr-2"></i> Share
                           </a>
                         </li>
                       </ul>
@@ -132,48 +166,17 @@ export default class Product extends Component {
                   <div class="row">
                     <div class="col-xl-8 offset-xl-2">
                       <div class="woocommerce-Tabs-panel woocommerce-Tabs-panel--description panel entry-content wc-tab pt-9">
+                        <p class="mb-0 comicdesc">
+                          {this.state.issueObjectState &&
+                            this.state.issueObjectState.description}
+                        </p>
+                        <br />
                         <p class="mb-0">
-                          We aim to show you accurate product information.
-                          Manufacturers, suppliers and others provide what you
-                          see here, and we have not verified it. See our
-                          disclaimer
+                          {this.state.seriesObjectState &&
+                            this.state.seriesObjectState.authorname}
                         </p>
-                        <p class="mb-0">#1 New York Times Bestseller</p>
-                        <p class="mb-0">
-                          A Reese Witherspoon x Hello Sunshine Book Club Pick
-                        </p>
-                        <p class="mb-4">
-                          "I can't even express how much I love this book! I
-                          didn't want this story to end!"--Reese Witherspoon
-                        </p>
-                        <p class="mb-4">
-                          "Painfully beautiful."--The New York Times Book Review
-                        </p>
-                        <p>"Perfect for fans of Barbara Kingsolver."--Bustle</p>
-                        <p class="mb-4">
-                          For years, rumors of the "Marsh Girl" have haunted
-                          Barkley Cove, a quiet town on the North Carolina
-                          coast. So in late 1969, when handsome Chase Andrews is
-                          found dead, the locals immediately suspect Kya Clark,
-                          the so-called Marsh Girl. But Kya is not what they
-                          say. Sensitive and intelligent, she has survived for
-                          years alone in the marsh that she calls home, finding
-                          friends in the gulls and lessons in the sand. Then the
-                          time comes when she yearns to be touched and loved.
-                          When two young men from town become intrigued by her
-                          wild beauty, Kya opens herself to a new life--until
-                          the unthinkable happens.
-                        </p>
-                        <p class="mb-4">
-                          Perfect for fans of Barbara Kingsolver and Karen
-                          Russell, Where the Crawdads Sing is at once an
-                          exquisite ode to the natural world, a heartbreaking
-                          coming-of-age story, and a surprising tale of possible
-                          murder. Owens reminds us that we are forever shaped by
-                          the children we once were, and that we are all subject
-                          to the beautiful and violent secrets that nature keeps
-                        </p>
-                        <p>WHERE THE CRAWDADS LP</p>
+                        <br />
+                        <br />
                       </div>
                     </div>
                   </div>
@@ -201,34 +204,47 @@ export default class Product extends Component {
                           <table class="table table-hover table-borderless">
                             <tbody>
                               <tr>
-                                <th class="px-4 px-xl-5">Format: </th>
-                                <td class="">Paperback | 384 pages</td>
+                                <th class="px-4 px-xl-5">Comic Publication</th>
+                                <td>
+                                  {this.state.issueObjectState &&
+                                    this.state.issueObjectState.publishdate}
+                                </td>
                               </tr>
                               <tr>
-                                <th class="px-4 px-xl-5">Dimensions</th>
-                                <td>9126 x 194 x 28mm | 301g</td>
+                                <th class="px-4 px-xl-5">Series Publication</th>
+                                <td>
+                                  {this.state.seriesObjectState &&
+                                    this.state.seriesObjectState.publishdate}
+                                </td>
                               </tr>
                               <tr>
-                                <th class="px-4 px-xl-5">Publication date: </th>
-                                <td>20 Dec 2020</td>
+                                <th class="px-4 px-xl-5">Universe:</th>
+                                <td>
+                                  {this.state.seriesObjectState &&
+                                    this.state.seriesObjectState.universe}
+                                </td>
                               </tr>
                               <tr>
-                                <th class="px-4 px-xl-5">Publisher:</th>
-                                <td>Little, Brown Book Group</td>
+                                <th class="px-4 px-xl-5">Category</th>
+                                <td>
+                                  {this.state.seriesObjectState &&
+                                    this.state.seriesObjectState.category}
+                                </td>
                               </tr>
                               <tr>
-                                <th class="px-4 px-xl-5">Imprint:</th>
-                                <td>Corsair</td>
+                                <th class="px-4 px-xl-5">Issue Number</th>
+                                <td>
+                                  {this.state.issueObjectState &&
+                                    this.state.issueObjectState.issuenumber}
+                                </td>
                               </tr>
                               <tr>
-                                <th class="px-4 px-xl-5">
-                                  Publication City/Country:
-                                </th>
-                                <td>London, United Kingdom</td>
-                              </tr>
-                              <tr>
-                                <th class="px-4 px-xl-5">Language:</th>
-                                <td>English</td>
+                                <th class="px-4 px-xl-5">Total Issues</th>
+                                <td>
+                                  {this.state.seriesObjectState &&
+                                    this.state.seriesObjectState
+                                      .issuespublished}
+                                </td>
                               </tr>
                             </tbody>
                           </table>
@@ -243,5 +259,46 @@ export default class Product extends Component {
         </div>
       </div>
     );
+  }
+  async componentWillMount() {
+    let id = localStorage.getItem("currentcomic");
+    if (id) {
+      this.setState({ comicId: id });
+
+      //set state for issue
+      let issueData = await axios.get(`http://localhost:5000/comic/${id}`);
+      let comicIssueData = issueData.data;
+
+      if (comicIssueData) {
+        this.setState({ issueObjectState: comicIssueData });
+      }
+
+      //set state for series
+      let seriesName = comicIssueData.seriesname;
+      console.log(seriesName);
+      let seriesData = await axios.get(
+        `http://localhost:5000/comicseries/${seriesName}`
+      );
+      let comicSeriesData = seriesData.data;
+
+      if (comicSeriesData) {
+        this.setState({ seriesObjectState: comicSeriesData });
+      }
+
+      //set state for pricing
+      let pricingData = await axios.get(`http://localhost:5000/prices/${id}`);
+      let comicPricingData = pricingData.data;
+
+      if (comicPricingData) {
+        this.setState({ pricingObjectState: comicPricingData });
+      }
+      let comicprice = comicPricingData.pb_price;
+      this.setState({ comicPrice: comicprice });
+      // initializing the render positon with value,
+      // else the select input must be clicked and generated to the function handle change to get an output
+    } else {
+      this.props.history.push("/products");
+      //if there is no item in the local accessing an empty product page is prohibitted
+    }
   }
 }

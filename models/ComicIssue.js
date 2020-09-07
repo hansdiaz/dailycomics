@@ -13,6 +13,10 @@ const ComicIssueSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  authorname: {
+    type: String,
+    required: true,
+  },
   imageref: {
     type: String,
     required: true,

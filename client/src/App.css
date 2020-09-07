@@ -24033,6 +24033,10 @@ html:not(.no-transition) body,
 	font-weight: 500
 }
 
+.comicdesc{
+	text-align: justify;
+}
+
 .bootstrap-select .dropdown-toggle:focus {
 	outline: none!important
 }
