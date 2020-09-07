@@ -10518,6 +10518,11 @@ a.close.disabled {
 	content: ""
 }
 
+.visibility{
+
+	visibility: hidden;
+}
+
 .carousel-item {
 	position: relative;
 	display: none;

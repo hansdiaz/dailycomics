@@ -42,7 +42,7 @@ export default class NavBar extends Component {
                 </div>
                 <div className="site-search ml-xl-0 ml-md-auto w-r-100 flex-grow-1 mr-md-5 py-2 py-md-0">
                   <form className="form-inline my-2 my-xl-0">
-                    <div className="input-group w-100">
+                    <div className="input-group w-100 visibility">
                       <input
                         type="text"
                         className="form-control border-right-0 px-3"
@@ -68,7 +68,7 @@ export default class NavBar extends Component {
                   </li>
                   <li className="nav-item">
                     <Link
-                      to="/login"
+                      to="/profile"
                       id="sidebarNavToggler"
                       role="button"
                       className="nav-link text-dark"

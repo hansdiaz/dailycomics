@@ -109,7 +109,7 @@ const userLogin = async (req, res) => {
         jwt.sign(
           payload,
           config.get("jwtSecret"),
-          { expiresIn: 36000 },
+          { expiresIn: 3600 },
           async (err, token) => {
             if (err) throw err;
             //timeOfExpire =await dateFns.addMilliseconds(Date.now, 36000);

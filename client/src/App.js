@@ -1,11 +1,12 @@
 import React, { Fragment, Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import ProtectedRoute from "react-protected-route-component";
-import setAuthToken from "./util/setAuthToken";
+import checkAuthToken from "./util/checkAuthToken";
 
 import NavBar from "../src/components/layout/NavBar";
 import Footer from "../src/components/layout/Footer";
 
+import ProfileComponent from "./components/Profile/ProfileComponent";
 import HomeComponent from "../src/components/combined/HomeComponent";
 import LoginComponent from "./components/auth/LoginComponent";
 import RegisterComponent from "./components/auth/RegisterComponent";
@@ -39,13 +40,26 @@ class App extends Component {
                 path="/cart"
                 redirectRoute="/login"
                 guardFunction={() => {
-                  if (setAuthToken()) {
+                  if (checkAuthToken()) {
                     return true;
                   } else {
                     return false;
                   }
                 }}
                 component={Cart}
+                exact
+              />
+              <ProtectedRoute
+                path="/profile"
+                redirectRoute="/login"
+                guardFunction={() => {
+                  if (checkAuthToken()) {
+                    return true;
+                  } else {
+                    return false;
+                  }
+                }}
+                component={ProfileComponent}
                 exact
               />
               <Route exact path="/products" component={Products} />
