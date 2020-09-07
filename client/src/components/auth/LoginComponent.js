@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 toast.configure();
 
-export default class LoginComponent extends Component {
+class LoginComponent extends Component {
   state = {
     email: "",
     password: "",
@@ -43,6 +43,8 @@ export default class LoginComponent extends Component {
         .then((res) => {
           console.log(res.data.msg);
           toast.success(res.data.msg);
+
+          this.props.history.push('/');
 
           localStorage.setItem("currentToken", res.data.token); //jwt token is saved to the local storage so that it can be accessed from any location
           localStorage.setItem("id", res.data.id);
@@ -202,3 +204,4 @@ export default class LoginComponent extends Component {
     );
   }
 }
+export default LoginComponent
