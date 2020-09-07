@@ -8,32 +8,32 @@ export default class MenuBar extends Component {
     render() {
         return (
             <div className="container">
-                <div className="bg-gray-200 border-bottom py-3 py-md-0">
+                <div className="border-bottom py-3 py-md-0">
                     <div className="d-md-flex position-relative">
                         <div className="site-navigation mr-auto d-none d-xl-block">
                             <ul className="nav">
                                 <li className="nav-item">
                                     <Link
                                         to="/account_details"
-                                        className="nav-link link-black-100 mx-2 px-0 py-3 font-weight-medium active border-bottom border-primary border-width-2"
+                                        className="nav-link link-black-100 mx-2 px-0 py-3 font-weight-medium active border-bottom border-info border-width-2"
                                     >
-                                        My Account
+                                        Account
                                 </Link>
                                 </li>
                                 <li className="nav-item">
                                     <Link
                                         to="/orders"
-                                        className="nav-link link-black-100 mx-2 px-0 py-3 font-weight-medium active border-bottom border-primary border-width-2"
+                                        className="nav-link link-black-100 mx-2 px-0 py-3 font-weight-medium active border-bottom border-info border-width-2"
                                     >
-                                        My Orders
+                                        Orders
                                 </Link>
                                 </li>
                                 <li className="nav-item">
                                     <Link
                                         to="/addresses"
-                                        className="nav-link link-black-100 mx-2 px-0 py-3 font-weight-medium active border-bottom border-primary border-width-2"
+                                        className="nav-link link-black-100 mx-2 px-0 py-3 font-weight-medium active border-bottom border-info border-width-2"
                                     >
-                                        My Address
+                                        Address
                                 </Link>
                                 </li>
                             </ul>

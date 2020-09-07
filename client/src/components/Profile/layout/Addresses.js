@@ -14,12 +14,11 @@ export default class Addresses extends Component {
                         <div class="mb-6 mb-md-0">
                             <h6 class="font-weight-medium font-size-22 mb-3">
                                 Billing Address
-    </h6>
+                            </h6>
                             <address class="d-flex flex-column mb-4">
                                 <span class="text-gray-600 font-size-2">Ali Tufan</span>
                                 <span class="text-gray-600 font-size-2">Bedford St,</span>
-                                <span class="text-gray-600 font-size-2">Covent Garden,
-      </span>
+                                <span class="text-gray-600 font-size-2">Covent Garden,</span>
                                 <span class="text-gray-600 font-size-2">London WC2E 9ED</span>
                                 <span class="text-gray-600 font-size-2">United Kingdom</span>
                             </address>
@@ -27,19 +26,18 @@ export default class Addresses extends Component {
                                 <button type="submit"
                                     class="btn btn-dark width-150 rounded-0 btn-wide font-weight-medium">
                                     Edit
-      </button>
+                                </button>
                             </div>
                         </div>
                     </div>
                     <div class="col">
                         <h6 class="font-weight-medium font-size-22 mb-3">
                             Shipping Address
-  </h6>
+                        </h6>
                         <address class="d-flex flex-column mb-4">
                             <span class="text-gray-600 font-size-2">Ali Tufan</span>
                             <span class="text-gray-600 font-size-2">Bedford St,</span>
-                            <span class="text-gray-600 font-size-2">Covent Garden,
-    </span>
+                            <span class="text-gray-600 font-size-2">Covent Garden,</span>
                             <span class="text-gray-600 font-size-2">London WC2E 9ED</span>
                             <span class="text-gray-600 font-size-2">United Kingdom</span>
                         </address>
@@ -47,7 +45,7 @@ export default class Addresses extends Component {
                             <button type="submit"
                                 class="btn btn-dark width-150 rounded-0 btn-wide font-weight-medium">
                                 Edit
-    </button>
+                            </button>
                         </div>
                     </div>
                 </div>

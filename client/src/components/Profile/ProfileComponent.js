@@ -23,16 +23,37 @@ import "../../assets/vendor/slick-carousel/slick/slick.css";
 import "../../assets/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css";
 
 class ProfileComponent extends Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      showAcc: true
+    }
+  }
+  hideAcc = () => {
+    this.setState({
+      showHeader: false
+    })
+  }
+
   render() {
     return (
       <Router>
         <Fragment>
           <div>
             <MenuBar />
+            {this.state.showHeader && <AccountDetails />}
             <Switch>
-              <Route exact path="/account_details" component={AccountDetails} />
-              <Route exact path="/orders" component={Orders} />
-              <Route exact path="/addresses" component={Addresses} />
+              <Route path="/account_details" component={AccountDetails} />
+              <Route path="/orders" component={Orders} />
+              <Route path="/addresses" component={Addresses} />
+              <Route render={(props) => (
+              <AccountDetails
+                  hideNavigation={this.hideAcc}
+                  {...props}
+                />
+              )}
+              />
             </Switch>
           </div>
         </Fragment>
