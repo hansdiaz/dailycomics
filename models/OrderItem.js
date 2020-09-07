@@ -5,6 +5,10 @@ const OrderItemSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  user_id: {
+    type: String,
+    required: true,
+  },
   purchase_type: {
     type: String,
     required: true,

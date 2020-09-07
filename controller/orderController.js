@@ -15,12 +15,12 @@ const createOrder = async (req, res) => {
     let comicExist = await Comic.findOne({ _id: comicissue_id });
 
     if (comicExist == false) {
-      //check the existence of the comic issue to make a stock
+      //check the existence of the comic issue
       res.status(400).send("There is no comic issue with this id");
     }
 
     OrderItemObject = new OrderItem({
-      //create series object to set data
+      //create  object to set data
       comicissue_id,
       purchase_type,
       order_item_status,
