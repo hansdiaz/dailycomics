@@ -9,6 +9,7 @@ import ProductTypes from "../bodyitems/ProductTypes";
 export default class HomeComponent extends Component {
   constructor(props) {
     super(props);
+    localStorage.setItem("accessright", false);
   }
 
   render() {

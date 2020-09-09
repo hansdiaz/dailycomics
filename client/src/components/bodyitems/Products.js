@@ -3,6 +3,10 @@ import axios from "axios";
 
 import AllProductsProduct from "../internalcomponents/AllProductsProduct";
 
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+toast.configure();
+
 export default class Products extends Component {
   state = {
     allComics: [],
@@ -48,6 +52,7 @@ export default class Products extends Component {
   }
 
   async componentDidMount() {
+    localStorage.setItem("accessright", false);
     let comicData = await axios.get("http://localhost:5000/allcomics");
     console.log(comicData);
 

@@ -24017,6 +24017,9 @@ html:not(.no-transition) body,
 	color: #161619
 }
 
+.comicblock{
+	display: block;
+}
 .bootstrap-select .filter-option {
 	display: -ms-flexbox;
 	display: flex;

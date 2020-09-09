@@ -3,11 +3,14 @@ import Select from "react-select";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { isEmptyObject } from "jquery";
+toast.configure();
+
 const purchaseType = [
-  { value: "pbsingle", label: "PaperBack Single" },
-  { value: "hbsingle", label: "HardBack Single" },
-  { value: "wsub", label: "Weekly Subscription" },
-  { value: "msub", label: "Monthly Subscription" },
+  { value: "pb_single", label: "PaperBack Single" },
+  { value: "hb_single", label: "HardBack Single" },
 ];
 
 export default class Product extends Component {
@@ -17,6 +20,7 @@ export default class Product extends Component {
       comicId: null,
       selectedOption: null,
       comicPrice: null,
+      priceType: null,
       priceCurrency: "$",
       currencyVisibility: null,
       issueObjectState: null,
@@ -28,18 +32,14 @@ export default class Product extends Component {
   handleChange = (selectedOption) => {
     //handling price
     let comicprice;
-    if (selectedOption.value == "pbsingle") {
+    if (selectedOption.value == "pb_single") {
       comicprice = this.state.pricingObjectState.pb_price;
       this.setState({ comicPrice: comicprice });
-    } else if (selectedOption.value == "hbsingle") {
+      this.setState({ priceType: "pb_single" });
+    } else if (selectedOption.value == "hb_single") {
       comicprice = this.state.pricingObjectState.hb_price;
       this.setState({ comicPrice: comicprice });
-    } else if (selectedOption.value == "wsub") {
-      comicprice = this.state.pricingObjectState.weekly_price;
-      this.setState({ comicPrice: comicprice });
-    } else if (selectedOption.value == "msub") {
-      comicprice = this.state.pricingObjectState.monthly_price;
-      this.setState({ comicPrice: comicprice });
+      this.setState({ priceType: "hb_single" });
     }
 
     console.log(`updated price:`, comicprice);
@@ -117,20 +117,15 @@ export default class Product extends Component {
                         />
                       </div>
                       <br />
-                      <form
-                        className="cart mb-4 d-md-flex align-items-end"
-                        enctype="multipart/form-data"
-                      >
+                      <div className="cart mb-4 d-md-flex align-items-end">
                         <button
-                          type="submit"
-                          name="add-to-cart"
-                          value="7145"
+                          onClick={this.onSubmit}
                           className="btn btn-block  btn-dark border-0 rounded-1 p-3 single_add_to_cart_button button alt"
                           style={{ minWidth: 100 + "%" }}
                         >
                           Add to cart
                         </button>
-                      </form>
+                      </div>
                       <ul className="list-unstyled nav d-block d-md-flex justify-content-center">
                         <li className="mr-md-4 mb-4 mb-md-0">
                           <a href="#" className="h-primary">
@@ -261,6 +256,7 @@ export default class Product extends Component {
     );
   }
   async componentWillMount() {
+    localStorage.setItem("accessright", false);
     let id = localStorage.getItem("currentcomic");
     if (id) {
       this.setState({ comicId: id });
@@ -292,13 +288,68 @@ export default class Product extends Component {
       if (comicPricingData) {
         this.setState({ pricingObjectState: comicPricingData });
       }
+
       let comicprice = comicPricingData.pb_price;
       this.setState({ comicPrice: comicprice });
+      let pricetype = "pb_single";
+      this.setState({ priceType: pricetype });
+
+      if (purchaseType.value == "pb_single") {
+        let comicprice = comicPricingData.pb_price;
+        this.setState({ comicPrice: comicprice });
+        let pricetype = "pb_single";
+        this.setState({ priceType: pricetype });
+      } else if (purchaseType.value == "hb_single") {
+        let comicprice = comicPricingData.hb_price;
+        this.setState({ comicPrice: comicprice });
+        let pricetype = "hb_single";
+        this.setState({ priceType: pricetype });
+      }
+
       // initializing the render positon with value,
       // else the select input must be clicked and generated to the function handle change to get an output
     } else {
+      toast.error("Please select a Comic Issue");
       this.props.history.push("/products");
       //if there is no item in the local accessing an empty product page is prohibitted
     }
   }
+
+  onSubmit = () => {
+    //submit function when adding item to cart
+    var cartItemFromLocalStorage = JSON.parse(localStorage.getItem("cartitem"));
+    if (!isEmptyObject(cartItemFromLocalStorage)) {
+      console.log("It came defined");
+
+      //set object data
+      let cartItemObject = {
+        comicid: this.state.comicId,
+        purchasetype: this.state.priceType,
+      };
+
+      cartItemFromLocalStorage.push(cartItemObject);
+
+      console.log(
+        localStorage.setItem(
+          "cartitem",
+          JSON.stringify(cartItemFromLocalStorage)
+        )
+      );
+      //localstorage only supports strings
+      toast.success("Item Added to cart");
+    } else if (isEmptyObject(cartItemFromLocalStorage)) {
+      //if there are no items in the cart array in the local storage then initialize and do this
+      console.log("It came undefined");
+      let cartItemObjectArray = [];
+      let cartItemObject = {
+        comicid: this.state.comicId,
+        purchasetype: this.state.priceType,
+      };
+      console.log(cartItemObject);
+      cartItemObjectArray.push(cartItemObject);
+      localStorage.setItem("cartitem", JSON.stringify(cartItemObjectArray));
+      toast.success("Item Added to cart");
+      console.log("This is the mighty array ", cartItemObjectArray);
+    }
+  };
 }

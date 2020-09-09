@@ -14,6 +14,7 @@ import ForgotPassword from "./components/auth/ForgotPassword";
 import Cart from "./components/bodyitems/Cart";
 import Products from "./components/bodyitems/Products";
 import Product from "./components/bodyitems/Product";
+import Checkout from "./components/bodyitems/Checkout";
 
 import "./App.css";
 import "./assets/vendor/font-awesome/css/fontawesome-all.min.css";
@@ -63,6 +64,7 @@ class App extends Component {
               />
               <Route exact path="/products" component={Products} />
               <Route exact path="/products/product" component={Product} />
+              <Route exact path="/checkout" component={Checkout} />
             </Switch>
             <Footer />
           </div>

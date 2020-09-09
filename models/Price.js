@@ -15,14 +15,6 @@ const PriceSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  weekly_price: {
-    type: Number,
-    required: true,
-  },
-  monthly_price: {
-    type: Number,
-    required: true,
-  },
 });
 
 module.exports = Price = mongoose.model("price", PriceSchema);
