@@ -1,22 +1,42 @@
 import React, { Component } from "react";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
+import checkAuthToken from "../../../util/checkAuthToken";
+import LoginComponent from "../../auth/LoginComponent";
+
 
 import AccountDetails from "../layout/AccountDetails";
 
+
 export default class MenuBar extends Component {
+
   constructor(props) {
     super(props);
-    //this.state = {};
   }
+
+
   async componentWillMount() {
     /*var userId = localStorage.getItem("id");
     let userData = await axios.get(`http://localhost:5000/user/${userId}`);
     this.setState("imageref", userData.avatar);*/
   }
-  logOut() {
-    /*this.props.history.push("/");
-    localStorage.clear();*/
+  logOut = () => {
+
+    const { history } = this.props;
+    
+
+    localStorage.removeItem("currentToken");
+
+    if (checkAuthToken()) {
+      return true;
+    } else {
+
+        window.location.reload(false);
+        
+      return false;
+
+    }
+
   }
   render() {
     return (
@@ -47,7 +67,7 @@ export default class MenuBar extends Component {
               <ul className="nav">
                 <li className="nav-item">
                   <Link
-                    onClick={() => this.logOut()}
+                    onClick={this.logOut}
                     className="nav-link link-black-100 mx-2 px-0 py-3 font-weight-medium"
                   >
                     LogOut
