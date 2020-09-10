@@ -2,11 +2,15 @@ import React, { Component } from "react";
 import Select from "react-select";
 import axios from "axios";
 import { Link } from "react-router-dom";
-
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { isEmptyObject } from "jquery";
+import Price from 'react-forex-price';
+
 toast.configure();
+
+const BASE_URL = 'https://api.exchangeratesapi.io/latest';
+
 
 const purchaseType = [
   { value: "pb_single", label: "PaperBack Single" },
@@ -18,31 +22,68 @@ export default class Product extends Component {
     super(props);
     this.state = {
       comicId: null,
-      selectedOption: null,
+      selectedOption: "pb_single",
       comicPrice: null,
+      comicPriceGBP: null,
       priceType: null,
       priceCurrency: "$",
       currencyVisibility: null,
       issueObjectState: null,
       seriesObjectState: null,
       pricingObjectState: null,
+      hasErrors: false,
+      rate: null
     };
   }
 
+  async componentDidMount() {
+
+    const response = await fetch(`${BASE_URL}?base=${'USD'}&symbols=${'GBP'}`);
+    const json = await response.json();
+    this.setState({ rate: json.rates.GBP });
+
+    console.log(`test`, this.state.rate);
+
+    // this.setState({selectedOption : 'pb_single'});
+
+  }
+
+  set_defaultPrice = (price) => {
+
+    let comicprice, GBP_Price;
+
+    comicprice = price;
+    this.setState({ comicPrice: comicprice });
+    GBP_Price = comicprice * this.state.rate;
+    this.setState({ comicPriceGBP: GBP_Price });
+    this.setState({ priceType: "pb_single" });
+
+    console.log('GBP', GBP_Price);
+
+  }
+
+
   handleChange = (selectedOption) => {
     //handling price
-    let comicprice;
+    let comicprice, GBP_Price;
     if (selectedOption.value == "pb_single") {
       comicprice = this.state.pricingObjectState.pb_price;
       this.setState({ comicPrice: comicprice });
+      GBP_Price = comicprice * this.state.rate;
+      this.setState({ comicPriceGBP: GBP_Price });
       this.setState({ priceType: "pb_single" });
+
     } else if (selectedOption.value == "hb_single") {
       comicprice = this.state.pricingObjectState.hb_price;
       this.setState({ comicPrice: comicprice });
+      GBP_Price = comicprice * this.state.rate;
+      this.setState({ comicPriceGBP: GBP_Price });
       this.setState({ priceType: "hb_single" });
     }
 
     console.log(`updated price:`, comicprice);
+    console.log('GBP', GBP_Price);
+
   };
 
   render() {
@@ -98,11 +139,13 @@ export default class Product extends Component {
                         </div>
                       </div>
                       <p className="price font-size-22 font-weight-medium mb-4">
-                        <span className="woocommerce-Price-amount amount">
-                          <span className="woocommerce-Price-currencySymbol">
-                            {this.state.priceCurrency}
-                          </span>
-                          {this.state.comicPrice}
+                        <span className="price mr-2">
+                          <Price amount={this.state.comicPrice}
+                            baseCurrency="USD" />
+                        </span>
+                        <span className="price ml-2">
+                          <Price amount={this.state.comicPriceGBP}
+                            baseCurrency="GBP" />
                         </span>
                       </p>
                       <label className="form-label font-size-2 font-weight-medium">
@@ -294,11 +337,15 @@ export default class Product extends Component {
       let pricetype = "pb_single";
       this.setState({ priceType: pricetype });
 
+      this.set_defaultPrice(comicprice);
+
+
       if (purchaseType.value == "pb_single") {
         let comicprice = comicPricingData.pb_price;
         this.setState({ comicPrice: comicprice });
         let pricetype = "pb_single";
         this.setState({ priceType: pricetype });
+
       } else if (purchaseType.value == "hb_single") {
         let comicprice = comicPricingData.hb_price;
         this.setState({ comicPrice: comicprice });
@@ -313,14 +360,14 @@ export default class Product extends Component {
       this.props.history.push("/products");
       //if there is no item in the local accessing an empty product page is prohibitted
     }
+
+
   }
 
   onSubmit = () => {
     //submit function when adding item to cart
     var cartItemFromLocalStorage = JSON.parse(localStorage.getItem("cartitem"));
-    //set no of items in cart
     if (!isEmptyObject(cartItemFromLocalStorage)) {
-      localStorage.setItem("cartquantity", cartItemFromLocalStorage.length);
       console.log("It came defined");
 
       //set object data

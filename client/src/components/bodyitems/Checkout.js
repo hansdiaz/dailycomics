@@ -7,12 +7,14 @@ import "../../App.css";
 import "react-toastify/dist/ReactToastify.css";
 import CheckoutItem from "../internalcomponents/CheckoutItem";
 import { isEmptyObject } from "jquery";
+import { ReCaptcha } from 'react-recaptcha-google';
+
 toast.configure();
 
 export default class Checkout extends Component {
   // eslint-disable-next-line
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
     this.state = {
       quantityid: null,
       allItems: [],
@@ -32,6 +34,21 @@ export default class Checkout extends Component {
       phonenumber: null,
       updateShippingAddress: false,
     };
+
+    this.onLoadRecaptcha = this.onLoadRecaptcha.bind(this);
+    this.verifyCallback = this.verifyCallback.bind(this);
+  }
+
+  onLoadRecaptcha() {
+    if (this.captchaDemo) {
+      this.captchaDemo.reset();
+      this.captchaDemo.execute();
+    }
+  }
+
+  verifyCallback(recaptchaToken) {
+    // Here you will get the final recaptchaToken!!!  
+    console.log('Recaptoken', recaptchaToken, "<= your recaptcha token");
   }
 
   render() {
@@ -302,6 +319,15 @@ export default class Checkout extends Component {
             </div>
           </div>
         </div>
+        {/* You can replace captchaDemo with any ref word */}
+        <ReCaptcha
+          ref={(el) => { this.captchaDemo = el; }}
+          size="invisible"
+          render="explicit"
+          sitekey="6LcfUsoZAAAAADeHL8EyacEV8s5wNLCkxAX_blz0"
+          onloadCallback={this.onLoadRecaptcha}
+          verifyCallback={this.verifyCallback}
+        />
       </div>
     );
   }
@@ -334,6 +360,19 @@ export default class Checkout extends Component {
       toast.error("Checkout expired");
       this.props.history.push("/products");
     }
+
+    const script = document.createElement("script");
+
+    script.src = "https://www.google.com/recaptcha/api.js";
+    script.async = true;
+
+    document.body.appendChild(script);
+
+    if (this.captchaDemo) {
+      console.log("started, just a second...")
+      this.captchaDemo.reset();
+      this.captchaDemo.execute();
+    }
   }
 
   async loadShippingData() {
@@ -351,7 +390,7 @@ export default class Checkout extends Component {
     let shippingDataExtract = shippingData.data;
     console.log(
       "checkpoint recieved shipping data: " +
-        JSON.stringify(shippingDataExtract)
+      JSON.stringify(shippingDataExtract)
     );
     if (shippingDataExtract) {
       fullName = shippingDataExtract.name;
@@ -405,9 +444,9 @@ export default class Checkout extends Component {
       } else if (!isEmptyObject(comicIdArray) && itemSetStatus == false) {
         console.log(
           "arrayNaviagtion is :" +
-            arraynavigation +
-            " comicArraylength is :" +
-            comicIdArray.length
+          arraynavigation +
+          " comicArraylength is :" +
+          comicIdArray.length
         );
 
         for (let index in comicIdArray) {
