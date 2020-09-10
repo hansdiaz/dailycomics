@@ -62,11 +62,6 @@ export default class NavBar extends Component {
                 </div>
                 <ul className="nav align-self-center d-none d-md-flex">
                   <li className="nav-item">
-                    <a href="#" className="nav-link text-dark">
-                      <i className="glph-icon flaticon-heart font-size-4"></i>
-                    </a>
-                  </li>
-                  <li className="nav-item">
                     <Link
                       to="/profile"
                       id="sidebarNavToggler"
@@ -144,18 +139,7 @@ export default class NavBar extends Component {
                     </li>
                   </ul>
                 </div>
-                <div className="d-none d-md-block ml-md-auto secondary-navigation ">
-                  <ul className="nav">
-                    <li className="nav-item">
-                      <a
-                        href="#"
-                        className="nav-link link-black-100 mx-2 px-0 py-3 font-weight-medium"
-                      >
-                        Subscription Pricing
-                      </a>
-                    </li>
-                  </ul>
-                </div>
+                <div className="d-none d-md-block ml-md-auto secondary-navigation "></div>
               </div>
             </div>
           </div>

@@ -8,11 +8,6 @@ import Footer from "../layout/Footer";
 import MenuBar from "../Profile/layout/MenuBar";
 import Orders from "../Profile/layout/Orders";
 import AccountDetails from "../Profile/layout/AccountDetails";
-import Addresses from "../Profile/layout/Addresses";
-
-
-
-
 
 import "../../App.css";
 import "../../assets/vendor/font-awesome/css/fontawesome-all.min.css";
@@ -23,18 +18,17 @@ import "../../assets/vendor/slick-carousel/slick/slick.css";
 import "../../assets/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css";
 
 class ProfileComponent extends Component {
-
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      showAcc: true
-    }
+      showAcc: true,
+    };
   }
   hideAcc = () => {
     this.setState({
-      showHeader: false
-    })
-  }
+      showHeader: false,
+    });
+  };
 
   render() {
     return (
@@ -46,13 +40,11 @@ class ProfileComponent extends Component {
             <Switch>
               <Route path="/account_details" component={AccountDetails} />
               <Route path="/orders" component={Orders} />
-              <Route path="/addresses" component={Addresses} />
-              <Route render={(props) => (
-              <AccountDetails
-                  hideNavigation={this.hideAcc}
-                  {...props}
-                />
-              )}
+
+              <Route
+                render={(props) => (
+                  <AccountDetails hideNavigation={this.hideAcc} {...props} />
+                )}
               />
             </Switch>
           </div>

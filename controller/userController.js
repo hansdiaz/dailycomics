@@ -56,8 +56,6 @@ const userRegistration = async (req, res) => {
         { expiresIn: 36000 },
         (err, token) => {
           if (err) throw err;
-          //timeOfExpire = dateFns.addMilliseconds(Date.now, amount);
-          //console.log(timeOfExpire);
           responseObject = { token: token, msg: "User Registered" };
           console.log("User Registered in successfully");
           res.json(responseObject);
@@ -110,8 +108,6 @@ const userLogin = async (req, res) => {
           { expiresIn: 3600 },
           async (err, token) => {
             if (err) throw err;
-            //timeOfExpire =await dateFns.addMilliseconds(Date.now, 36000);
-            //var timeOfExpire = await moment().add(36000, "milliseconds");
             var timeOfExpire = new Date(Date.now() + 36000);
             console.log(timeOfExpire);
             responseObject = {
@@ -143,6 +139,77 @@ const userLogin = async (req, res) => {
 //GoogleLogin
 const googleUserLogin = async (req, res) => {
   //code comes here after setting heroku for google developer console auth screen confirmation
+  try {
+    const email = req.body.email;
+
+    if (email == false) {
+      responseObject = { msg: "Not all mandatory values have been set!" };
+      return res.status(400).send(responseObject);
+    }
+
+    const user = await User.findOne({ email }); //check if user already exists
+
+    if (user == false) {
+      var avatar = gravatar.url(email, { s: "100", r: "pg", d: "mm" }, true);
+
+      user = new User({
+        //create user object to set data
+        email,
+        password,
+        avatar,
+      });
+
+      await user.save();
+
+      jwt.sign(
+        payload,
+        config.get("jwtSecret"),
+        { expiresIn: 3600 },
+        async (err, token) => {
+          if (err) throw err;
+          var timeOfExpire = new Date(Date.now() + 36000);
+          console.log(timeOfExpire);
+          responseObject = {
+            id: user.id,
+            token: token,
+            msg: "Login Successful",
+          };
+
+          console.log("User Logged in successfully");
+          res.json(responseObject);
+        }
+      );
+    } else {
+      if (isMatch) {
+        const payload = {
+          user: {
+            id: user.id,
+          },
+        };
+        jwt.sign(
+          payload,
+          config.get("jwtSecret"),
+          { expiresIn: 3600 },
+          async (err, token) => {
+            if (err) throw err;
+            var timeOfExpire = new Date(Date.now() + 36000);
+            console.log(timeOfExpire);
+            responseObject = {
+              id: user.id,
+              token: token,
+              msg: "Login Successful",
+            };
+
+            console.log("User Logged in successfully");
+            res.json(responseObject);
+          }
+        );
+      }
+    }
+  } catch (error) {
+    console.log("Error caught at ", error);
+    res.status(500).send("Server Error " + error);
+  }
 };
 
 //Update

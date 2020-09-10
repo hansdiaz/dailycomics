@@ -56,6 +56,22 @@ const shippingSave = async (req, res) => {
   }
 };
 
+const registrationSaveShipping = (id) => {
+  try {
+    //this method is called internally by another constructor at the registration of user
+    shippingObject = new Shipping({
+      //create shipping object to set data
+      user_id: id,
+    });
+
+    shippingObject.save();
+    res.status(200).send("Shipping details saved to " + userExist.email);
+  } catch (error) {
+    console.log("Error caught at ", error);
+    res.status(500).send("Server Error");
+  }
+};
+
 //Update
 const shippingUpdate = async (req, res) => {
   try {
@@ -210,6 +226,7 @@ const deleteShipping = async (req, res) => {
 
 module.exports = {
   shippingSave,
+  registrationSaveShipping,
   shippingUpdate,
   getAllShipping,
   getShipping,

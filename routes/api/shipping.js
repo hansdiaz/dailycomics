@@ -1,6 +1,7 @@
 const express = require("express");
 const ShippingRouter = express.Router();
 const cors = require("cors");
+const auth = require("../../middleware/auth");
 
 const ShippingController = require("../../controller/shippingController");
 
@@ -16,12 +17,21 @@ ShippingRouter.post("/usershippingsave", cors({ origin: true }), (req, res) => {
   ShippingController.shippingSave(req, res);
 });
 
-ShippingRouter.put("/usershippingupdate", cors({ origin: true }), (req, res) => {
-  ShippingController.shippingUpdate(req, res);
-});
+ShippingRouter.put(
+  "/usershippingupdate",
+  auth,
+  cors({ origin: true }),
+  (req, res) => {
+    ShippingController.shippingUpdate(req, res);
+  }
+);
 
-ShippingRouter.delete("/deleteshippingdetails/:id", cors({ origin: true }), (req, res) => {
-  ShippingController.deleteShipping(req, res);
-});
+ShippingRouter.delete(
+  "/deleteshippingdetails/:id",
+  cors({ origin: true }),
+  (req, res) => {
+    ShippingController.deleteShipping(req, res);
+  }
+);
 
 module.exports = ShippingRouter;

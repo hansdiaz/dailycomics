@@ -18,134 +18,20 @@ export default class Checkout extends Component {
       allItems: [],
       priceList: [],
       subTotalArray: [],
+      comicIdArray: JSON.parse(localStorage.getItem("a_comic")),
+      purchaseTypeArray: JSON.parse(localStorage.getItem("a_purchase")),
+      quantityArray: JSON.parse(localStorage.getItem("a_quantity")),
       amount: null,
       totalitems: null,
+      cartQuantity: JSON.parse(localStorage.getItem("cartquantity")),
+      name: null,
+      address: null,
+      city: null,
+      country: null,
+      postalcode: null,
+      phonenumber: null,
+      updateShippingAddress: false,
     };
-  }
-
-  formerrender() {
-    //const element = (<div>Text from Element</div>)
-    return (
-      <div className="site-content bg-punch-light overflow-x" id="content">
-        <div className="container">
-          <header className="entry-header space-top-2 space-bottom-1 mb-2">
-            <h1 className="entry-title font-size-7">Your cart items</h1>
-          </header>
-          <div className="row pb-8 justify-content-between ">
-            <div
-              id="primary"
-              className="content-area"
-              style={{ maxWidth: 1000 }}
-            >
-              <main id="main" className="site-main">
-                <div className="page type-page status-publish hentry">
-                  <div className="entry-content">
-                    <div className="woocommerce">
-                      <form
-                        className="woocommerce-cart-form table-responsive"
-                        action="#"
-                        method="post"
-                      >
-                        <table className="shop_table shop_table_responsive cart woocommerce-cart-form__contents">
-                          <thead>
-                            <tr>
-                              <th className="product-name">Product</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {this.state.allItems.map((orderItemObject) => (
-                              <div key={orderItemObject.comicid}>
-                                <CheckoutItem
-                                  key={orderItemObject.comicid}
-                                  data={orderItemObject}
-                                  onRemove={() =>
-                                    this.removeItem(orderItemObject.comicid)
-                                  }
-                                />
-                              </div>
-                            ))}
-                          </tbody>
-                        </table>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </main>
-            </div>
-            <div style={{ minWidth: 380 }}>
-              <div
-                id="secondary"
-                className=" cart-collaterals order-1"
-                role="complementary"
-              >
-                <div
-                  id="cartAccordion"
-                  className="border border-gray-900 bg-white mb-5"
-                >
-                  <div className="p-4d875 border">
-                    <div id="cartHeadingOne" className="cart-head">
-                      <div
-                        className="d-flex align-items-center justify-content-between text-dark"
-                        data-toggle="collapse"
-                        data-target="#cartCollapseOne"
-                        aria-expanded="true"
-                        aria-controls="cartCollapseOne"
-                      >
-                        <h3 className="cart-title mb-0 font-weight-medium font-size-3">
-                          Cart Total
-                        </h3>
-                      </div>
-                    </div>
-                    <div
-                      id="cartCollapseOne"
-                      className="mt-4 cart-content collapse show"
-                      aria-labelledby="cartHeadingOne"
-                      data-parent="#cartAccordion"
-                    >
-                      <table className="shop_table shop_table_responsive">
-                        <tbody>
-                          <tr className="order-shipping">
-                            <th>Shipping</th>
-                            <td data-title="Shipping">Free Shipping</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                  <div className="p-4d875 border">
-                    <table className="shop_table shop_table_responsive">
-                      <tbody>
-                        <tr className="order-total">
-                          <th>Total</th>
-                          <td data-title="Total">
-                            <strong>
-                              <span className="woocommerce-Price-amount amount">
-                                <span className="woocommerce-Price-currencySymbol">
-                                  $
-                                </span>
-                                {this.state.amount}
-                              </span>
-                            </strong>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-              <div className="wc-proceed-to-checkout">
-                <Link
-                  onClick={() => this.navigateToCheckout()}
-                  className="checkout-button button alt wc-forward btn btn-dark btn-block rounded-0 py-4"
-                >
-                  Proceed to checkout
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
   }
 
   render() {
@@ -167,305 +53,247 @@ export default class Checkout extends Component {
                       Checkout
                     </h4>
                   </header>
+
+                  <div className="d-flex justify-content-center">
+                    <table
+                      className="shop_table shop_table_responsive cart woocommerce-cart-form__contents"
+                      style={{ maxWidth: 800 }}
+                    >
+                      <thead>
+                        <tr>
+                          <th className="product-name">Product</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {this.state.allItems.map((orderItemObject) => (
+                          <div key={orderItemObject.comicid}>
+                            <CheckoutItem
+                              key={orderItemObject.comicid}
+                              data={orderItemObject}
+                              onRemove={() =>
+                                this.removeItem(orderItemObject.comicid)
+                              }
+                            />
+                          </div>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <br />
                   <div className="d-flex justify-content-center">
                     <div className="entry-content">
                       <div className="woocommerce">
-                        <form
-                          id="collapseExample9"
-                          className="collapse checkout_coupon mt-4 p-4 bg-white border"
-                          method="post"
-                        >
-                          <div className="row d-flex">
-                            <p className="col-md-4 d-inline form-row form-row-first mb-3 mb-md-0">
-                              <input
-                                type="text"
-                                name="coupon_code1"
-                                className="input-text form-control"
-                                placeholder="Coupon code"
-                                id="coupon_code1"
-                                value=""
-                              />
-                            </p>
-                            <p className="col-md-3 d-inline form-row form-row-last">
-                              <input
-                                type="submit"
-                                className="button form-control border-0 height-4 btn btn-dark rounded-0"
-                                name="apply_coupon"
-                                value="Apply coupon"
-                              />
-                            </p>
-                          </div>
-                          <div className="clear"></div>
-                        </form>
-                        
-                        <form
-                          name="checkout"
-                          method="post"
-                          className="checkout woocommerce-checkout row mt-8"
-                          action="https://themes.woocommerce.com/storefront/checkout/"
-                          enctype="multipart/form-data"
-                          novalidate="novalidate"
-                        >
+                        <form name="checkout">
                           <div
-                            className=" col-md-12 col-lg-12 mb-6 mb-md-0"
-                            id="customer_details"
+                            className="form-row-wide"
+                            style={{ maxWidth: 790 }}
                           >
-                            <div className="px-4 pt-5 bg-white border">
-                              <div className="woocommerce-billing-fields">
-                                <h3 className="mb-4 font-size-3">
-                                  Billing details
-                                </h3>
-                                <div className="woocommerce-billing-fields__field-wrapper row">
-                                <p
-                                    className="col-12 mb-4d75 form-row form-row-first validate-required woocommerce-invalid woocommerce-invalid-required-field"
-                                    id="billing_first_name_field"
-                                    data-priority="10"
-                                  >
-                                    <label
-                                      for="billing_first_name"
-                                      className="form-label"
-                                    >
-                                      First name
-                                      <abbr
-                                        className="required"
-                                        title="required"
+                            <div
+                              className=" col-md-12 col-lg-12 mb-6 mb-md-0"
+                              id="customer_details"
+                            >
+                              <div className="px-4 pt-5 bg-white border">
+                                <div className="woocommerce-billing-fields">
+                                  <h3 className="mb-4 font-size-3">
+                                    Billing and Shipping details (will be saved)
+                                  </h3>
+                                  <div className="woocommerce-billing-fields__field-wrapper row">
+                                    <div className="col-12 mb-4d75 form-row form-row-first">
+                                      <label
+                                        for="billing_company"
+                                        className="form-label"
                                       >
-                                        *
-                                      </abbr>
-                                    </label>
-                                    <input
-                                      type="text"
-                                      className="input-text form-control"
-                                      name="billing_first_name"
-                                      id="billing_first_name"
-                                      placeholder=""
-                                      value=""
-                                      autocomplete="given-name"
-                                      autofocus="autofocus"
-                                    />
-                                  </p>
-                                  
-                                  <p
-                                    className="col-12 mb-4d75 form-row form-row-wide"
-                                    id="billing_company_field"
-                                    data-priority="30"
-                                  >
-                                    <label
-                                      for="billing_company"
-                                      className="form-label"
-                                    >
-                                      Company name
-                                    </label>
-                                    <input
-                                      type="text"
-                                      className="input-text form-control"
-                                      name="billing_company"
-                                      id="billing_company"
-                                      placeholder=""
-                                      value=""
-                                      autocomplete="organization"
-                                    />
-                                  </p>
-                                                                 <p
-                                    className="col-12 mb-4d75 form-row form-row-wide address-field update_totals_on_change validate-required woocommerce-validated"
-                                    id="billing_country_field"
-                                    data-priority="40"
-                                  >
-                                    <label
-                                      for="billing_country"
-                                      className="form-label"
-                                    >
-                                      Country
-                                      <abbr
-                                        className="required"
-                                        title="required"
+                                        Full Name*
+                                      </label>
+                                      <input
+                                        className="input-text form-control"
+                                        name="name"
+                                        placeholder="Stan Lee"
+                                        value={this.state.name}
+                                        onChange={this.handleChange}
+                                      />
+                                    </div>
+                                    <div className="col-12 mb-4d75 form-row form-row-first">
+                                      <label
+                                        for="billing_company"
+                                        className="form-label"
                                       >
-                                        *
-                                      </abbr>
-                                    </label>
-                                  </p>
-                                  <p
-                                    className="col-12 mb-3 form-row form-row-wide address-field validate-required"
-                                    id="billing_address_1_field"
-                                    data-priority="50"
-                                  >
-                                    <label
-                                      for="billing_address_1"
-                                      className="form-label"
-                                    >
-                                      Street address
-                                      <abbr
-                                        className="required"
-                                        title="required"
+                                        Address*
+                                      </label>
+                                      <input
+                                        className="input-text form-control"
+                                        name="address"
+                                        placeholder="No.120, Stark Tower, Manhattan"
+                                        value={this.state.address}
+                                        onChange={this.handleChange}
+                                      />
+                                    </div>
+                                    <div className="col-12 mb-4d75 form-row form-row-first">
+                                      <label
+                                        for="billing_company"
+                                        className="form-label"
                                       >
-                                        *
-                                      </abbr>
-                                    </label>
-                                    <input
-                                      type="text"
-                                      className="input-text form-control"
-                                      name="billing_address_1"
-                                      id="billing_address_1"
-                                      placeholder="House number and street name"
-                                      value=""
-                                      autocomplete="address-line1"
-                                    />
-                                  </p>
-                                  <p
-                                    className="col-12 mb-4d75 form-row form-row-wide address-field"
-                                    id="billing_address_2_field"
-                                    data-priority="60"
-                                  >
-                                    <input
-                                      type="text"
-                                      className="input-text form-control"
-                                      name="billing_address_2"
-                                      id="billing_address_2"
-                                      placeholder="Apartment, suite, unit etc. (optional)"
-                                      value=""
-                                      autocomplete="address-line2"
-                                    />
-                                  </p>
-                                  <p
-                                    className="col-12 mb-4d75 form-row form-row-wide address-field validate-required"
-                                    id="billing_city_field"
-                                    data-priority="70"
-                                    data-o_class="form-row form-row-wide address-field validate-required"
-                                  >
-                                    <label
-                                      for="billing_city"
-                                      className="form-label"
-                                    >
-                                      Town / City
-                                      <abbr
-                                        className="required"
-                                        title="required"
+                                        City*
+                                      </label>
+                                      <input
+                                        className="input-text form-control"
+                                        name="city"
+                                        placeholder="New York"
+                                        value={this.state.city}
+                                        onChange={this.handleChange}
+                                      />
+                                    </div>
+                                    <div className="col-12 mb-4d75 form-row form-row-first">
+                                      <label
+                                        for="billing_company"
+                                        className="form-label"
                                       >
-                                        *
-                                      </abbr>
-                                    </label>
-                                    <input
-                                      type="text"
-                                      className="input-text form-control"
-                                      name="billing_city"
-                                      id="billing_city"
-                                      placeholder=""
-                                      value=""
-                                      autocomplete="address-level2"
-                                    />
-                                  </p>
-                                  <p
-                                    className="col-12 mb-4d75 form-row form-row-wide address-field validate-state woocommerce-validated"
-                                    id="billing_state_field"
-                                    data-priority="80"
-                                    data-o_class="form-row form-row-wide address-field validate-state"
-                                  >
-                                    <label
-                                      for="billing_state"
-                                      className="form-label"
-                                    >
-                                      County
-                                    </label>
-                                    <input
-                                      type="text"
-                                      className="input-text form-control"
-                                      value=""
-                                      placeholder=""
-                                      name="billing_state"
-                                      id="billing_state"
-                                      autocomplete="address-level1"
-                                    />
-                                  </p>
-                                  <p
-                                    className="col-12 mb-4d75 form-row form-row-wide address-field validate-postcode validate-required"
-                                    id="billing_postcode_field"
-                                    data-priority="90"
-                                    data-o_class="form-row form-row-wide address-field validate-required validate-postcode"
-                                  >
-                                    <label
-                                      for="billing_postcode"
-                                      className="form-label"
-                                    >
-                                      Postcode
-                                      <abbr
-                                        className="required"
-                                        title="required"
+                                        Country*
+                                      </label>
+                                      <input
+                                        className="input-text form-control"
+                                        name="country"
+                                        placeholder="America"
+                                        value={this.state.country}
+                                        onChange={this.handleChange}
+                                      />
+                                    </div>
+                                    <div className="col-12 mb-4d75 form-row form-row-first">
+                                      <label
+                                        for="billing_company"
+                                        className="form-label"
                                       >
-                                        *
-                                      </abbr>
-                                    </label>
-                                    <input
-                                      type="text"
-                                      className="input-text form-control"
-                                      name="billing_postcode"
-                                      id="billing_postcode"
-                                      placeholder=""
-                                      value=""
-                                      autocomplete="postal-code"
-                                    />
-                                  </p>
-                                  <p
-                                    className="col-12 mb-4d75 form-row form-row-first validate-required validate-phone"
-                                    id="billing_phone_field"
-                                    data-priority="100"
-                                  >
-                                    <label
-                                      for="billing_phone"
-                                      className="form-label"
-                                    >
-                                      Phone
-                                      <abbr
-                                        className="required"
-                                        title="required"
+                                        Postal Code*
+                                      </label>
+                                      <input
+                                        className="input-text form-control"
+                                        name="postalcode"
+                                        placeholder="11523A"
+                                        value={this.state.postalcode}
+                                        onChange={this.handleChange}
+                                      />
+                                    </div>
+                                    <div className="col-12 mb-4d75 form-row form-row-first">
+                                      <label
+                                        for="billing_company"
+                                        className="form-label"
                                       >
-                                        *
-                                      </abbr>
-                                    </label>
-                                    <input
-                                      type="tel"
-                                      className="input-text form-control"
-                                      name="billing_phone"
-                                      id="billing_phone"
-                                      placeholder=""
-                                      value=""
-                                      autocomplete="tel"
-                                    />
-                                  </p>
-                                  <p
-                                    className="col-12 mb-4d75 form-row form-row-last validate-required validate-email"
-                                    id="billing_email_field"
-                                    data-priority="110"
-                                  >
-                                    <label
-                                      for="billing_email"
-                                      className="form-label"
-                                    >
-                                      Email address
-                                      <abbr
-                                        className="required"
-                                        title="required"
-                                      >
-                                        *
-                                      </abbr>
-                                    </label>
-                                    <input
-                                      type="email"
-                                      className="input-text form-control"
-                                      name="billing_email"
-                                      id="billing_email"
-                                      placeholder=""
-                                      value=""
-                                      autocomplete="email"
-                                    />
-                                </p>
-                                
+                                        Phone Number (Optional)
+                                      </label>
+                                      <input
+                                        className="input-text form-control"
+                                        name="phonenumber"
+                                        placeholder="077 123 4567"
+                                        value={this.state.phonenumber}
+                                        onChange={this.handleChange}
+                                      />
+                                    </div>
+                                    <br />
+                                  </div>
                                 </div>
                               </div>
                             </div>
-
                           </div>
                         </form>
-                      
+                      </div>
+                    </div>
+                    <div style={{ minWidth: 360 }}>
+                      <div
+                        id="secondary"
+                        className=" cart-collaterals order-1"
+                        role="complementary"
+                      >
+                        <div
+                          id="cartAccordion"
+                          className="border border-gray-900 bg-white mb-5"
+                        >
+                          <div className="p-4d875 border">
+                            <div id="cartHeadingOne" className="cart-head">
+                              <div
+                                className="d-flex align-items-center justify-content-between text-dark"
+                                data-toggle="collapse"
+                                data-target="#cartCollapseOne"
+                                aria-expanded="true"
+                                aria-controls="cartCollapseOne"
+                              >
+                                <h3 className="cart-title mb-0 font-weight-medium font-size-3">
+                                  Amount of Items:&nbsp;
+                                  {this.state.cartQuantity}
+                                </h3>
+                              </div>
+                            </div>
+                            <div
+                              id="cartCollapseOne"
+                              className="mt-4 cart-content collapse show"
+                              aria-labelledby="cartHeadingOne"
+                              data-parent="#cartAccordion"
+                            >
+                              <table className="shop_table shop_table_responsive">
+                                <tbody>
+                                  <tr className="order-shipping">
+                                    <th>Shipping</th>
+                                    <td data-title="Shipping">Free Shipping</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                          <div className="p-4d875 border">
+                            <table className="shop_table shop_table_responsive">
+                              <tbody>
+                                <tr className="order-total">
+                                  <th>Total</th>
+                                  <td data-title="Total">
+                                    <strong>
+                                      <span className="woocommerce-Price-amount amount">
+                                        <span className="woocommerce-Price-currencySymbol">
+                                          $
+                                        </span>
+                                        {this.state.amount}
+                                      </span>
+                                    </strong>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="wc-proceed-to-checkout">
+                        <Link
+                          onClick={() => this.navigateToReciept()}
+                          className="checkout-button button alt wc-forward btn btn-dark btn-block rounded-0 py-4"
+                        >
+                          Order
+                        </Link>
+                      </div>
+                      <br />
+                      <div
+                        className="js-animation-link small"
+                        data-target="#login1"
+                        data-link-group="idForm1"
+                        data-animation-in="fadeIn"
+                      >
+                        <Link
+                          onClick={() => this.changeAddressData()}
+                          className="checkout-button button alt wc-forward btn btn-dark btn-block rounded-0 py-4"
+                        >
+                          Make this Default Address
+                        </Link>
+                      </div>
+                      <br />
+                      <div
+                        className="js-animation-link small"
+                        data-target="#login1"
+                        data-link-group="idForm1"
+                        data-animation-in="fadeIn"
+                      >
+                        <Link
+                          onClick={() => this.changeAddressDataBack()}
+                          className="checkout-button button alt wc-forward btn btn-dark btn-block rounded-0 py-4"
+                        >
+                          Only Temporary Address
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -478,18 +306,70 @@ export default class Checkout extends Component {
     );
   }
 
+  handleChange = (event) => {
+    const target = event.target;
+    const name = target.name;
+    const value = target.value;
+
+    this.setState({
+      [name]: value,
+    });
+  };
+
   async componentDidMount() {
     let cartItemObjectArray = JSON.parse(localStorage.getItem("cartitem"));
-
+    this.loadShippingData();
     if (localStorage.getItem("accessright")) {
       localStorage.setItem("accessright", false);
-      //rendering
+      if (!isEmptyObject(cartItemObjectArray)) {
+        this.subTotaller(cartItemObjectArray);
+      } else {
+        console.log("Nothing in your cart right now");
+        toast.error("Nothing in your cart right now");
+        this.props.history.push("/products");
+      }
     } else {
       //if no content in your cartobject then redirect to collection
       console.log("Checkout expired");
       toast.error("Checkout expired");
       this.props.history.push("/products");
     }
+  }
+
+  async loadShippingData() {
+    var userId = localStorage.getItem("id");
+    var fullName = null;
+    var Address = null;
+    var City = null;
+    var Country = null;
+    var postalCode = null;
+    var phoneNumber = null;
+
+    let shippingData = await axios.get(
+      `http://localhost:5000/usershipping/${userId}`
+    );
+    let shippingDataExtract = shippingData.data;
+    console.log(
+      "checkpoint recieved shipping data: " +
+        JSON.stringify(shippingDataExtract)
+    );
+    if (shippingDataExtract) {
+      fullName = shippingDataExtract.name;
+      Address = shippingDataExtract.address;
+      City = shippingDataExtract.city;
+      Country = shippingDataExtract.country;
+      postalCode = shippingDataExtract.postalcode;
+      phoneNumber = shippingDataExtract.phonenumber;
+    }
+
+    this.setState({ name: fullName });
+    this.setState({ address: Address });
+    this.setState({ city: City });
+    this.setState({ country: Country });
+    this.setState({ postalcode: postalCode });
+    this.setState({ phonenumber: phoneNumber });
+
+    //get and load shipping data from db to input
   }
 
   //function is there to get the amount of items per item and its purchasetype it
@@ -703,7 +583,128 @@ export default class Checkout extends Component {
     }
   }
 
-  navigateToReciept() {
-    this.props.history.push("/reciept");
+  async navigateToReciept() {
+    if (this.state.updateShippingAddress == true) {
+      //if the guy wants to update the default shipping data too
+      let userUpdate = {
+        _id: localStorage.getItem("id"),
+        name: this.state.name,
+        address: this.state.address,
+        postalcode: this.state.postalcode,
+        city: this.state.city,
+        country: this.state.country,
+        phonenumber: this.state.phonenumber,
+      };
+      var jwt_token = localStorage.getItem("currentToken"); //because it is a protected route
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          "x-auth-token": jwt_token,
+        },
+      };
+      const body = JSON.stringify(userUpdate);
+      const res = await axios
+        .put("http://localhost:5000/usershippingupdate", body, config)
+        .then((res) => {
+          console.log(res.data.msg);
+          toast.success(res.data.msg);
+        })
+        .catch((err) => {
+          toast.error(err);
+          console.log(err);
+        });
+
+      if (res == false) {
+        console.log(
+          "unexpected error occured at updating new default shipping"
+        );
+        toast.success(
+          "unexpected error occured at updating new default shipping"
+        );
+      }
+    }
+    //reducing the stock from database
+    /*for (let i in this.state.purchaseTypeArray) {
+      let dataObject = {
+        comicissue_id: this.state.comicIdArray[i],
+        stock_type: this.state.purchaseTypeArray[i],
+        stock_qty: this.state.quantityArray[i],
+      };
+
+      var jwt_token = localStorage.getItem("currentToken"); //because it is a protected route
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          "x-auth-token": jwt_token,
+        },
+      };
+      const body = JSON.stringify(dataObject);
+      var res2 = await axios
+        .put("http://localhost:5000/consumestock", body, config)
+        .then((res2) => {
+          console.log(res2.data.msg);
+          toast.success(res2.data.msg);
+        })
+        .catch((err) => {
+          toast.error(err);
+          console.log(err);
+        });
+
+      if (res2 == false) {
+        console.log(
+          "unexpected error occured at updating new default shipping"
+        );
+        toast.success(
+          "unexpected error occured at updating new default shipping"
+        );
+      }
+    }*/
+
+    //completing the order
+    let orderComplete = {
+      user_id: localStorage.getItem("id"),
+      name: this.state.name,
+      address: this.state.address,
+      postalcode: this.state.postalcode,
+      city: this.state.city,
+      country: this.state.country,
+      phonenumber: this.state.phonenumber,
+      total_items: this.state.totalitems,
+      total: this.state.amount,
+      quantity_array: this.state.quantityArray,
+      purchase_array: this.state.purchaseTypeArray,
+      item_array: this.state.comicIdArray,
+    };
+    console.log("checkpoint : orderComplete" + JSON.stringify(orderComplete));
+    var jwt_token = localStorage.getItem("currentToken"); //because it is a protected route
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        "x-auth-token": jwt_token,
+      },
+    };
+    const body = JSON.stringify(orderComplete);
+    const result = await axios
+      .post("http://localhost:5000/createorder", body, config)
+      .then((res2) => {
+        console.log(res2);
+        toast.success(res2);
+        localStorage.removeItem("cartitem");
+        toast.success("Order Success");
+        this.props.history.push("/products");
+      })
+      .catch((error) => {
+        toast.error(error);
+        console.log(error);
+      });
+  }
+
+  changeAddressData() {
+    this.setState({ updateShippingAddress: true });
+    toast.success("Added as new Default Address");
+  }
+  changeAddressDataBack() {
+    this.setState({ updateShippingAddress: false });
+    toast.success("Added as a Temporary Address");
   }
 }

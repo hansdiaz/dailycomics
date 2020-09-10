@@ -19,6 +19,7 @@ export default class Cart extends Component {
       subTotalArray: [],
       amount: null,
       totalitems: null,
+      cartQuantity: JSON.parse(localStorage.getItem("cartquantity")),
     };
   }
 
@@ -28,7 +29,9 @@ export default class Cart extends Component {
       <div className="site-content bg-punch-light overflow-x" id="content">
         <div className="container">
           <header className="entry-header space-top-2 space-bottom-1 mb-2">
-            <h1 className="entry-title font-size-7">Your cart items</h1>
+            <h1 className="entry-title font-size-7">
+              Your cart items:
+            </h1>
           </header>
           <div className="row pb-8 justify-content-between ">
             <div
@@ -71,6 +74,7 @@ export default class Cart extends Component {
                 </div>
               </main>
             </div>
+
             <div style={{ minWidth: 380 }}>
               <div
                 id="secondary"
@@ -254,6 +258,7 @@ export default class Cart extends Component {
 
   async subTotaller() {
     let cartItemObjectArray = JSON.parse(localStorage.getItem("cartitem"));
+    localStorage.setItem("cartquantity", cartItemObjectArray.length);
     if (this.arraySetup(cartItemObjectArray)) {
       console.log("checkpoint subtotler inside");
       let orderItems = [];
@@ -388,12 +393,14 @@ export default class Cart extends Component {
     }
     console.log("checkpoint broke");
     let cartItemObjectArray2 = JSON.parse(localStorage.getItem("cartitem"));
+    localStorage.setItem("cartquantity", cartItemObjectArray2.length);
     if (!isEmptyObject(cartItemObjectArray2)) {
       await this.subTotaller();
     } else {
       //if no content in your cartobject then redirect to collection
       console.log("Nothing in your cart right now");
       toast.error("Nothing in your cart right now");
+      localStorage.setItem("cartquantity", 0);
       this.props.history.push("/products");
     }
   }

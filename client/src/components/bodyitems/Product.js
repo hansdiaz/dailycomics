@@ -318,7 +318,9 @@ export default class Product extends Component {
   onSubmit = () => {
     //submit function when adding item to cart
     var cartItemFromLocalStorage = JSON.parse(localStorage.getItem("cartitem"));
+    //set no of items in cart
     if (!isEmptyObject(cartItemFromLocalStorage)) {
+      localStorage.setItem("cartquantity", cartItemFromLocalStorage.length);
       console.log("It came defined");
 
       //set object data

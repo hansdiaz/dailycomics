@@ -23,4 +23,8 @@ stockRouter.delete("/deletestock/:id", cors({ origin: true }), (req, res) => {
   stockController.deleteStock(req, res);
 });
 
+stockRouter.put("/consumeStock/", cors({ origin: true }), (req, res) => {
+  stockController.consumeStock(req, res);
+});
+
 module.exports = stockRouter;

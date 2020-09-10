@@ -133,10 +133,59 @@ const deleteStock = async (req, res) => {
     .catch((err) => res.status(404).json("failed to delete stock"));
 };
 
+const consumeStock = async (req, res) => {
+  try {
+    let comicissueId = req.body.comicissue_id;
+    let stock_qty = JSON.parse(req.body.stock_qty); //intergered it since it came sringified
+    let stock_type = req.body.stock_type;
+
+    var stockData = Stock.findOne({ comicissue_id: comicissueId });
+
+    if (stockData == false) {
+      return res.status(404).json("There is no stock found to consume");
+    }
+    const stockUpdate = null;
+    if (stock_type == "hb_single") {
+      let hb_stock_qty = 0;
+      hb_stock_qty = stockData.hb_stock;
+      hb_stock_qty = hb_stock_qty - stock_qty;
+
+      stockUpdate = await Stock.findOneAndUpdate(
+        { comicissue_id: comicissueId },
+        {
+          hb_stock: hb_stock_qty,
+        }
+      );
+    } else if (stock_type == "pb_single") {
+      let pb_stock_qty = 0;
+      pb_stock_qty = stockData.pb_stock;
+      pb_stock_qty = pb_stock_qty - stock_qty;
+
+      stockUpdate = await Stock.findOneAndUpdate(
+        { comicissue_id: comicissueId },
+        {
+          pb_stock: pb_stock_qty,
+        }
+      );
+    }
+
+    if (stockUpdate == true) {
+      console.log("Updated the stock");
+      return res.status(200).json("Stock updated");
+    } else {
+      return res.status(404).json("Stock update failed");
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(404).json(error);
+  }
+};
+
 module.exports = {
   stockSave,
   stockUpdate,
   getAllStock,
   getStock,
   deleteStock,
+  consumeStock,
 };

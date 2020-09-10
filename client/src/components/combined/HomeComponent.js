@@ -2,9 +2,6 @@ import React, { Component, Fragment } from "react";
 
 import HomeFront from "../bodyitems/HomeFront";
 import ServiceBanner from "../bodyitems/ServiceBanner";
-import ProductTypes from "../bodyitems/ProductTypes";
-//import FeaturedComics from "../bodyitems/FeaturedComics";
-//import BestAuthor from "../bodyitems/BestAuthor";
 
 export default class HomeComponent extends Component {
   constructor(props) {
@@ -17,7 +14,6 @@ export default class HomeComponent extends Component {
     return (
       <Fragment>
         <HomeFront />
-        <ProductTypes />
         <ServiceBanner />
       </Fragment>
     );

@@ -1,8 +1,13 @@
 import React, { Component } from "react";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
+import OrderItems from "../layout/OrderItems";
 
 export default class Orders extends Component {
+  state = {
+    allOrders: [],
+  };
+
   render() {
     return (
       <div class="container my-lg-1 pt-lg-8 py-lg-8 pl-lg-9 pl-md-5">
@@ -12,82 +17,52 @@ export default class Orders extends Component {
         <table class="table">
           <thead>
             <tr class="border">
-              <th scope="col" class="py-3 border-bottom-0 font-weight-medium pl-3 pl-lg-5">
-                Order
-                          </th>
-              <th scope="col" class="py-3 border-bottom-0 font-weight-medium">
-                Date
-                          </th>
-              <th scope="col" class="py-3 border-bottom-0 font-weight-medium">
-                Staus
-                          </th>
-              <th scope="col" class="py-3 border-bottom-0 font-weight-medium">
-                Total
-                          </th>
-              <th scope="col" class="py-3 border-bottom-0 font-weight-medium">
-                Actions
-                          </th>
+              <th
+                scope="col"
+                class="py-3 border-bottom-0 font-weight-medium pl-3 pl-lg-5"
+              >
+                Orders
+              </th>
             </tr>
           </thead>
           <tbody>
-            <tr class="border">
-              <th class="pl-3 pl-md-5 font-weight-normal align-middle py-6">
-                #30785
-                          </th>
-              <td class="align-middle py-5">March 26, 2020</td>
-              <td class="align-middle py-5">On hold</td>
-              <td class="align-middle py-5">
-                <span class="text-primary">$1,855.00</span> for 5
-                            items
-                          </td>
-              <td class="align-middle py-5">
-                <div class="d-flex justify-content-center">
-                  <button type="submit" class="btn btn-dark rounded-0 btn-wide font-weight-medium">
-                    View
-                              </button>
-                </div>
-              </td>
-            </tr>
-            <tr class="border">
-              <th class="pl-3 pl-md-5 font-weight-normal align-middle py-6">
-                #30785
-                          </th>
-              <td class="align-middle py-5">March 26, 2020</td>
-              <td class="align-middle py-5">On hold</td>
-              <td class="align-middle py-5">
-                <span class="text-primary">$1,855.00</span> for 5
-                            items
-                          </td>
-              <td class="align-middle py-5">
-                <div class="d-flex justify-content-center">
-                  <button type="submit" class="btn btn-dark rounded-0 btn-wide font-weight-medium">
-                    View
-                              </button>
-                </div>
-              </td>
-            </tr>
-            <tr class="border">
-              <th class="pl-3 pl-md-5 font-weight-normal align-middle py-6">
-                #30785
-                          </th>
-              <td class="align-middle py-5">March 26, 2020</td>
-              <td class="align-middle py-5">On hold</td>
-              <td class="align-middle py-5">
-                <span class="text-primary">$1,855.00</span> for 5
-                            items
-                          </td>
-              <td class="align-middle py-5">
-                <div class="d-flex justify-content-center">
-                  <button type="submit" class="btn btn-dark rounded-0 btn-wide font-weight-medium">
-                    View
-                  </button>
-                </div>
-              </td>
-            </tr>
+            {this.state.allOrders.map((order) => (
+              <div key={order.id}>
+                <OrderItems
+                  key={order.id}
+                  data={order}
+                  onNavigate={() => this.navigateToOrder(order.id)}
+                />
+              </div>
+            ))}
           </tbody>
         </table>
       </div>
     );
   }
-}
+  async componentDidMount() {
+    let orderData = await axios.get("http://localhost:5000/allorders");
+    console.log(orderData);
 
+    let state = [];
+    if (orderData) {
+      state = orderData.data.map((order) => {
+        return {
+          id: order._id,
+          order_date: order.order_date,
+          total_items: order.total_items,
+          total: order.total,
+          order_item_status: order.order_item_status,
+        };
+      });
+    }
+    console.log(state);
+    console.log(this.state.allOrders);
+    this.setState({ allOrders: state });
+  }
+
+  navigateToOrder(orderid) {
+    /*localStorage.setItem("watchingOrder", orderid);
+    this.props.history.push("/orders/order");*/
+  }
+}

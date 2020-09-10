@@ -7,16 +7,8 @@ const priceSave = async (req, res) => {
     let comicissue_id = req.body.comicissue_id;
     let hb_price = req.body.hb_price;
     let pb_price = req.body.pb_price;
-    let weekly_price = req.body.weekly_price;
-    let monthly_price = req.body.monthly_price;
 
-    if (
-      comicissue_id == false ||
-      hb_price == false ||
-      pb_price == false ||
-      weekly_price == false ||
-      monthly_price == false
-    ) {
+    if (comicissue_id == false || hb_price == false || pb_price == false) {
       return res.status(400).send("Not all mandatory values have been set!");
     }
 
@@ -32,8 +24,6 @@ const priceSave = async (req, res) => {
       comicissue_id,
       hb_price,
       pb_price,
-      weekly_price,
-      monthly_price,
     });
 
     await priceObject.save();
@@ -50,16 +40,8 @@ const priceUpdate = async (req, res) => {
     let comicissue_id = req.body.comicissue_id;
     let hb_price = req.body.hb_price;
     let pb_price = req.body.pb_price;
-    let weekly_price = req.body.weekly_price;
-    let monthly_price = req.body.monthly_price;
 
-    if (
-      comicissue_id == false ||
-      hb_price == false ||
-      pb_price == false ||
-      weekly_price == false ||
-      monthly_price == false
-    ) {
+    if (comicissue_id == false || hb_price == false || pb_price == false) {
       return res.status(400).send("Not all mandatory values have been set!");
     }
 
@@ -74,8 +56,6 @@ const priceUpdate = async (req, res) => {
       {
         hb_price: hb_price,
         pb_price: pb_price,
-        weekly_price: weekly_price,
-        monthly_price: monthly_price,
       }
     )
       .then((priceUpdate) => {
@@ -102,8 +82,6 @@ const getAllPrices = async (req, res) => {
       comicissue_id: 1,
       hb_price: 1,
       pb_price: 1,
-      weekly_price: 1,
-      monthly_price: 1,
     }
   )
     .populate("prices")
@@ -127,8 +105,6 @@ const getPrice = async (req, res) => {
       comicissue_id: 1,
       hb_price: 1,
       pb_price: 1,
-      weekly_price: 1,
-      monthly_price: 1,
     }
   )
     .populate("prices")

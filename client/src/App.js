@@ -64,7 +64,19 @@ class App extends Component {
               />
               <Route exact path="/products" component={Products} />
               <Route exact path="/products/product" component={Product} />
-              <Route exact path="/checkout" component={Checkout} />
+              <ProtectedRoute
+                path="/checkout"
+                redirectRoute="/login"
+                guardFunction={() => {
+                  if (checkAuthToken()) {
+                    return true;
+                  } else {
+                    return false;
+                  }
+                }}
+                component={Checkout}
+                exact
+              />
             </Switch>
             <Footer />
           </div>

@@ -44,7 +44,7 @@ class LoginComponent extends Component {
           console.log(res.data.msg);
           toast.success(res.data.msg);
 
-          this.props.history.push('/');
+          this.props.history.push("/");
 
           localStorage.setItem("currentToken", res.data.token); //jwt token is saved to the local storage so that it can be accessed from any location
           localStorage.setItem("id", res.data.id);
@@ -84,6 +84,11 @@ class LoginComponent extends Component {
         .then((res) => {
           console.log(res.data.msg);
           toast.success(res.data.msg);
+
+          this.props.history.push("/");
+
+          localStorage.setItem("currentToken", res.data.token); //jwt token is saved to the local storage so that it can be accessed from any location
+          localStorage.setItem("id", res.data.id);
         })
         .catch((err) => {
           toast.error(err.data.msg);
@@ -204,4 +209,4 @@ class LoginComponent extends Component {
     );
   }
 }
-export default LoginComponent
+export default LoginComponent;
