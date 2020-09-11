@@ -155,7 +155,6 @@ const googleUserLogin = async (req, res) => {
       user = new User({
         //create user object to set data
         email,
-        password,
         avatar,
       });
 

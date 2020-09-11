@@ -15,6 +15,7 @@ import Cart from "./components/bodyitems/Cart";
 import Products from "./components/bodyitems/Products";
 import Product from "./components/bodyitems/Product";
 import Checkout from "./components/bodyitems/Checkout";
+import PrivacyPolicy from "./components/bodyitems/PrivacyPolicy";
 
 import "./App.css";
 import "./assets/vendor/font-awesome/css/fontawesome-all.min.css";
@@ -36,6 +37,7 @@ class App extends Component {
               <Route exact path="/login" component={LoginComponent} />
               <Route exact path="/register" component={RegisterComponent} />
               <Route exact path="/forgotpassword" component={ForgotPassword} />
+              <Route exact path="/privacypolicy" component={PrivacyPolicy} />
               <ProtectedRoute
                 path="/cart"
                 redirectRoute="/login"

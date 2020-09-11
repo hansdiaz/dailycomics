@@ -71,7 +71,6 @@ class LoginComponent extends Component {
     try {
       const googleUser = {
         email: response.email,
-        password: response.token,
       };
 
       const config = {

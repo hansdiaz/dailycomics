@@ -38,7 +38,7 @@ export default class RegisterComponent extends React.Component {
       };
       const body = JSON.stringify(newUser);
       const res = await axios
-        .post("http://localhost:5000/createuser", body, config) 
+        .post("http://localhost:5000/createuser", body, config)
         .then((res) => {
           console.log(res.data.msg);
           toast.success(res.data.msg);
@@ -158,6 +158,17 @@ export default class RegisterComponent extends React.Component {
                   data-animation-in="fadeIn"
                 >
                   Login
+                </Link>
+              </div>
+              <div className="text-center mb-4">
+                <Link
+                  to="/privacypolicy"
+                  className="js-animation-link small"
+                  data-target="#login1"
+                  data-link-group="idForm1"
+                  data-animation-in="fadeIn"
+                >
+                  Privacy Policy
                 </Link>
               </div>
             </div>
