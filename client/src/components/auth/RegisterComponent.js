@@ -38,7 +38,7 @@ export default class RegisterComponent extends React.Component {
       };
       const body = JSON.stringify(newUser);
       const res = await axios
-        .post("http://localhost:5000/createuser", body, config)
+        .post("http://dailycomics.herokuapp.com/createuser", body, config)
         .then((res) => {
           console.log(res.data.msg);
           toast.success(res.data.msg);

@@ -41,7 +41,9 @@ export default class Orders extends Component {
     );
   }
   async componentDidMount() {
-    let orderData = await axios.get("http://localhost:5000/allorders");
+    let orderData = await axios.get(
+      "http://dailycomics.herokuapp.com/allorders"
+    );
     console.log(orderData);
 
     let state = [];

@@ -7,7 +7,7 @@ import "../../App.css";
 import "react-toastify/dist/ReactToastify.css";
 import CheckoutItem from "../internalcomponents/CheckoutItem";
 import { isEmptyObject } from "jquery";
-import { ReCaptcha } from 'react-recaptcha-google';
+import { ReCaptcha } from "react-recaptcha-google";
 
 toast.configure();
 
@@ -47,8 +47,8 @@ export default class Checkout extends Component {
   }
 
   verifyCallback(recaptchaToken) {
-    // Here you will get the final recaptchaToken!!!  
-    console.log('Recaptoken', recaptchaToken, "<= your recaptcha token");
+    // Here you will get the final recaptchaToken!!!
+    console.log("Recaptoken", recaptchaToken, "<= your recaptcha token");
   }
 
   render() {
@@ -321,7 +321,9 @@ export default class Checkout extends Component {
         </div>
         {/* You can replace captchaDemo with any ref word */}
         <ReCaptcha
-          ref={(el) => { this.captchaDemo = el; }}
+          ref={(el) => {
+            this.captchaDemo = el;
+          }}
           size="invisible"
           render="explicit"
           sitekey="6LcfUsoZAAAAADeHL8EyacEV8s5wNLCkxAX_blz0"
@@ -369,7 +371,7 @@ export default class Checkout extends Component {
     document.body.appendChild(script);
 
     if (this.captchaDemo) {
-      console.log("started, just a second...")
+      console.log("started, just a second...");
       this.captchaDemo.reset();
       this.captchaDemo.execute();
     }
@@ -385,12 +387,12 @@ export default class Checkout extends Component {
     var phoneNumber = null;
 
     let shippingData = await axios.get(
-      `http://localhost:5000/usershipping/${userId}`
+      `http://dailycomics.herokuapp.com/usershipping/${userId}`
     );
     let shippingDataExtract = shippingData.data;
     console.log(
       "checkpoint recieved shipping data: " +
-      JSON.stringify(shippingDataExtract)
+        JSON.stringify(shippingDataExtract)
     );
     if (shippingDataExtract) {
       fullName = shippingDataExtract.name;
@@ -444,9 +446,9 @@ export default class Checkout extends Component {
       } else if (!isEmptyObject(comicIdArray) && itemSetStatus == false) {
         console.log(
           "arrayNaviagtion is :" +
-          arraynavigation +
-          " comicArraylength is :" +
-          comicIdArray.length
+            arraynavigation +
+            " comicArraylength is :" +
+            comicIdArray.length
         );
 
         for (let index in comicIdArray) {
@@ -529,7 +531,7 @@ export default class Checkout extends Component {
         Quantity = quantityArray[index];
 
         let issueData = await axios.get(
-          `http://localhost:5000/comic/${comicId}`
+          `http://dailycomics.herokuapp.com/comic/${comicId}`
         );
         comicIssueData = issueData.data;
 
@@ -542,7 +544,7 @@ export default class Checkout extends Component {
         }
 
         let pricingData = await axios.get(
-          `http://localhost:5000/prices/${comicId}`
+          `http://dailycomics.herokuapp.com/prices/${comicId}`
         );
         console.log("pricing data" + JSON.stringify(pricingData));
         comicPricingData = pricingData.data;
@@ -560,7 +562,7 @@ export default class Checkout extends Component {
         console.log("checkpoint subtotal:" + SubTotal);
 
         let seriesData = await axios.get(
-          `http://localhost:5000/comicseries/${seriesName}`
+          `http://dailycomics.herokuapp.com/comicseries/${seriesName}`
         );
         let comicSeriesData = seriesData.data;
         console.log("checkpoint comicSeriesData:" + comicSeriesData);
@@ -643,7 +645,11 @@ export default class Checkout extends Component {
       };
       const body = JSON.stringify(userUpdate);
       const res = await axios
-        .put("http://localhost:5000/usershippingupdate", body, config)
+        .put(
+          "http://dailycomics.herokuapp.com/usershippingupdate",
+          body,
+          config
+        )
         .then((res) => {
           console.log(res.data.msg);
           toast.success(res.data.msg);
@@ -679,7 +685,7 @@ export default class Checkout extends Component {
       };
       const body = JSON.stringify(dataObject);
       var res2 = await axios
-        .put("http://localhost:5000/consumestock", body, config)
+        .put("http://dailycomics.herokuapp.com/consumestock", body, config)
         .then((res2) => {
           console.log(res2.data.msg);
           toast.success(res2.data.msg);
@@ -724,7 +730,7 @@ export default class Checkout extends Component {
     };
     const body = JSON.stringify(orderComplete);
     const result = await axios
-      .post("http://localhost:5000/createorder", body, config)
+      .post("http://dailycomics.herokuapp.com/createorder", body, config)
       .then((res2) => {
         console.log(res2);
         toast.success(res2);

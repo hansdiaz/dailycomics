@@ -53,7 +53,7 @@ export default class AccountDetails extends Component {
     };
     const body = JSON.stringify(userUpdate);
     const res = await axios
-      .put("http://localhost:5000/usershippingupdate", body, config)
+      .put("http://dailycomics.herokuapp.com/usershippingupdate", body, config)
       .then((res) => {
         console.log(res.data.msg);
         toast.success(res.data.msg);
@@ -81,7 +81,7 @@ export default class AccountDetails extends Component {
     var phoneNumber = null;
 
     let shippingData = await axios.get(
-      `http://localhost:5000/usershipping/${userId}`
+      `http://dailycomics.herokuapp.com/usershipping/${userId}`
     );
     let shippingDataExtract = shippingData.data;
     console.log(

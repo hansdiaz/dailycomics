@@ -4,40 +4,31 @@ import axios from "axios";
 import checkAuthToken from "../../../util/checkAuthToken";
 import LoginComponent from "../../auth/LoginComponent";
 
-
 import AccountDetails from "../layout/AccountDetails";
 
-
 export default class MenuBar extends Component {
-
   constructor(props) {
     super(props);
   }
 
-
   async componentWillMount() {
     /*var userId = localStorage.getItem("id");
-    let userData = await axios.get(`http://localhost:5000/user/${userId}`);
+    let userData = await axios.get(`http://dailycomics.herokuapp.com/user/${userId}`);
     this.setState("imageref", userData.avatar);*/
   }
   logOut = () => {
-
     const { history } = this.props;
-    
 
     localStorage.removeItem("currentToken");
 
     if (checkAuthToken()) {
       return true;
     } else {
+      window.location.reload(false);
 
-        window.location.reload(false);
-        
       return false;
-
     }
-
-  }
+  };
   render() {
     return (
       <div className="container">

@@ -58,7 +58,7 @@ export default class Checkout extends Component {
     var phoneNumber = null;
 
     let shippingData = await axios.get(
-      `http://localhost:5000/usershipping/${orderId}`
+      `http://dailycomics.herokuapp.com/usershipping/${orderId}`
     );
     let shippingDataExtract = shippingData.data;
     console.log(

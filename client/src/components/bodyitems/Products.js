@@ -53,7 +53,9 @@ export default class Products extends Component {
 
   async componentDidMount() {
     localStorage.setItem("accessright", false);
-    let comicData = await axios.get("http://localhost:5000/allcomics");
+    let comicData = await axios.get(
+      "http://dailycomics.herokuapp.com/allcomics"
+    );
     console.log(comicData);
 
     let state = [];

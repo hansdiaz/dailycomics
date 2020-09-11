@@ -29,9 +29,7 @@ export default class Cart extends Component {
       <div className="site-content bg-punch-light overflow-x" id="content">
         <div className="container">
           <header className="entry-header space-top-2 space-bottom-1 mb-2">
-            <h1 className="entry-title font-size-7">
-              Your cart items:
-            </h1>
+            <h1 className="entry-title font-size-7">Your cart items:</h1>
           </header>
           <div className="row pb-8 justify-content-between ">
             <div
@@ -284,7 +282,7 @@ export default class Cart extends Component {
         Quantity = quantityArray[index];
 
         let issueData = await axios.get(
-          `http://localhost:5000/comic/${comicId}`
+          `http://dailycomics.herokuapp.com/comic/${comicId}`
         );
         comicIssueData = issueData.data;
 
@@ -297,7 +295,7 @@ export default class Cart extends Component {
         }
 
         let pricingData = await axios.get(
-          `http://localhost:5000/prices/${comicId}`
+          `http://dailycomics.herokuapp.com/prices/${comicId}`
         );
         console.log("pricing data" + JSON.stringify(pricingData));
         comicPricingData = pricingData.data;
@@ -315,7 +313,7 @@ export default class Cart extends Component {
         console.log("checkpoint subtotal:" + SubTotal);
 
         let seriesData = await axios.get(
-          `http://localhost:5000/comicseries/${seriesName}`
+          `http://dailycomics.herokuapp.com/comicseries/${seriesName}`
         );
         let comicSeriesData = seriesData.data;
         console.log("checkpoint comicSeriesData:" + comicSeriesData);
