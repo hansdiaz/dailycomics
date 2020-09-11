@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 export default class HomeFront extends Component {
   constructor(props) {
@@ -46,14 +47,14 @@ export default class HomeFront extends Component {
                                     Comic Publisher
                                   </span>
                                 </h2>
-                                <a
-                                  href="../shop/v7.html"
+                                <Link
+                                  to="/products"
                                   className="banner_btn btn btn-wide bg-dark rounded-0 text-white"
                                   data-scs-animation-in="fadeInLeft"
                                   data-scs-animation-delay="400"
                                 >
                                   Start Shopping
-                                </a>
+                                </Link>
                               </div>
                             </div>
                           </div>
