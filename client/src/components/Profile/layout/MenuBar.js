@@ -13,7 +13,7 @@ export default class MenuBar extends Component {
 
   async componentWillMount() {
     /*var userId = localStorage.getItem("id");
-    let userData = await axios.get(`http://dailycomics.herokuapp.com/user/${userId}`);
+    let userData = await axios.get(`https://dailycomics.herokuapp.com/user/${userId}`);
     this.setState("imageref", userData.avatar);*/
   }
   logOut = () => {

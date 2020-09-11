@@ -39,7 +39,7 @@ class LoginComponent extends Component {
       };
       const body = JSON.stringify(logginUser);
       const res = await axios
-        .post("http://dailycomics.herokuapp.com/loginuser", body, config)
+        .post("https://dailycomics.herokuapp.com/loginuser", body, config)
         .then((res) => {
           console.log(res.data.msg);
           toast.success(res.data.msg);
@@ -79,7 +79,7 @@ class LoginComponent extends Component {
       };
       const body = JSON.stringify(googleUser);
       const res = axios
-        .post("http://dailycomics.herokuapp.com/googleuserlogin", body, config)
+        .post("https://dailycomics.herokuapp.com/googleuserlogin", body, config)
         .then((res) => {
           console.log(res.data.msg);
           toast.success(res.data.msg);

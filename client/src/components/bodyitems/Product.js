@@ -302,7 +302,7 @@ export default class Product extends Component {
 
       //set state for issue
       let issueData = await axios.get(
-        `http://dailycomics.herokuapp.com/comic/${id}`
+        `https://dailycomics.herokuapp.com/comic/${id}`
       );
       let comicIssueData = issueData.data;
 
@@ -314,7 +314,7 @@ export default class Product extends Component {
       let seriesName = comicIssueData.seriesname;
       console.log(seriesName);
       let seriesData = await axios.get(
-        `http://dailycomics.herokuapp.com/comicseries/${seriesName}`
+        `https://dailycomics.herokuapp.com/comicseries/${seriesName}`
       );
       let comicSeriesData = seriesData.data;
 
@@ -324,7 +324,7 @@ export default class Product extends Component {
 
       //set state for pricing
       let pricingData = await axios.get(
-        `http://dailycomics.herokuapp.com/prices/${id}`
+        `https://dailycomics.herokuapp.com/prices/${id}`
       );
       let comicPricingData = pricingData.data;
 

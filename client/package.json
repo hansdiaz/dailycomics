@@ -53,5 +53,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://dailycomics.herokuapp.com"
+  "proxy": "https://dailycomics.herokuapp.com"
 }

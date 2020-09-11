@@ -387,7 +387,7 @@ export default class Checkout extends Component {
     var phoneNumber = null;
 
     let shippingData = await axios.get(
-      `http://dailycomics.herokuapp.com/usershipping/${userId}`
+      `https://dailycomics.herokuapp.com/usershipping/${userId}`
     );
     let shippingDataExtract = shippingData.data;
     console.log(
@@ -531,7 +531,7 @@ export default class Checkout extends Component {
         Quantity = quantityArray[index];
 
         let issueData = await axios.get(
-          `http://dailycomics.herokuapp.com/comic/${comicId}`
+          `https://dailycomics.herokuapp.com/comic/${comicId}`
         );
         comicIssueData = issueData.data;
 
@@ -544,7 +544,7 @@ export default class Checkout extends Component {
         }
 
         let pricingData = await axios.get(
-          `http://dailycomics.herokuapp.com/prices/${comicId}`
+          `https://dailycomics.herokuapp.com/prices/${comicId}`
         );
         console.log("pricing data" + JSON.stringify(pricingData));
         comicPricingData = pricingData.data;
@@ -562,7 +562,7 @@ export default class Checkout extends Component {
         console.log("checkpoint subtotal:" + SubTotal);
 
         let seriesData = await axios.get(
-          `http://dailycomics.herokuapp.com/comicseries/${seriesName}`
+          `https://dailycomics.herokuapp.com/comicseries/${seriesName}`
         );
         let comicSeriesData = seriesData.data;
         console.log("checkpoint comicSeriesData:" + comicSeriesData);
@@ -646,7 +646,7 @@ export default class Checkout extends Component {
       const body = JSON.stringify(userUpdate);
       const res = await axios
         .put(
-          "http://dailycomics.herokuapp.com/usershippingupdate",
+          "https://dailycomics.herokuapp.com/usershippingupdate",
           body,
           config
         )
@@ -685,7 +685,7 @@ export default class Checkout extends Component {
       };
       const body = JSON.stringify(dataObject);
       var res2 = await axios
-        .put("http://dailycomics.herokuapp.com/consumestock", body, config)
+        .put("https://dailycomics.herokuapp.com/consumestock", body, config)
         .then((res2) => {
           console.log(res2.data.msg);
           toast.success(res2.data.msg);
@@ -730,7 +730,7 @@ export default class Checkout extends Component {
     };
     const body = JSON.stringify(orderComplete);
     const result = await axios
-      .post("http://dailycomics.herokuapp.com/createorder", body, config)
+      .post("https://dailycomics.herokuapp.com/createorder", body, config)
       .then((res2) => {
         console.log(res2);
         toast.success(res2);
