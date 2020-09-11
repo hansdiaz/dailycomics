@@ -164,15 +164,8 @@ export default class Product extends Component {
                         >
                           Add to cart
                         </button>
+                        <br />
                       </div>
-                      <ul className="list-unstyled nav d-block d-md-flex justify-content-center">
-                        <li className="mr-md-4 mb-4 mb-md-0">
-                          <a href="#" className="h-primary">
-                            <i className="flaticon-heart mr-2"></i> Add to
-                            Wishlist
-                          </a>
-                        </li>
-                      </ul>
                     </div>
                   </div>
                 </div>
